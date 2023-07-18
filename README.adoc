@@ -63,3 +63,20 @@ mvn -U org.openrewrite.maven:rewrite-maven-plugin:run \
 ----
 
 If we were to run this one on the current project, and then execute a `git diff` we'd see:
+
+[source]
+----
+diff --git a/src/main/java/dev/simonverhoeven/openrewritedemo/OpenrewritedemoApplication.java b/src/main/java/dev/simonverhoeven/openrewritedemo/OpenrewritedemoApplication.java
+index d97b878..8e85aaf 100644
+--- a/src/main/java/dev/simonverhoeven/openrewritedemo/OpenrewritedemoApplication.java
++++ b/src/main/java/dev/simonverhoeven/openrewritedemo/OpenrewritedemoApplication.java
+@@ -3,8 +3,6 @@ package dev.simonverhoeven.openrewritedemo;
+ import org.springframework.boot.SpringApplication;
+ import org.springframework.boot.autoconfigure.SpringBootApplication;
+
+-import java.math.BigDecimal;
+-
+ @SpringBootApplication
+ public class OpenrewritedemoApplication {
+
+----
