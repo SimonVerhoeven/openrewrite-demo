@@ -49,3 +49,17 @@ rewrite {
 ----
 
 After which we can try `./mvnw rewrite:discover` or `./gradlew rewriteDiscover` to discover which recipes we can run from OpenRewrite using this setup. (we can add other sources/write our own).
+
+=== Standalone
+
+==== Recipe without configuration parameters
+
+Certain recipes require no input such as the RemoveUnusedImports one
+
+[source]
+----
+mvn -U org.openrewrite.maven:rewrite-maven-plugin:run \
+  -Drewrite.activeRecipes=org.openrewrite.java.RemoveUnusedImports
+----
+
+If we were to run this one on the current project, and then execute a `git diff` we'd see:
