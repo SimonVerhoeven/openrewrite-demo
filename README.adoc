@@ -3,5 +3,5 @@
 This is a sample project to showcase some of the functionalities of https://https://docs.openrewrite.org/[OpenRewrite]
 
 OpenRewrite allows us to do major refactorings on our source code using (prewritten) recipes.
-It works my by making changes to the Lossless Semantic Trees representing our source code and printing the modifications back to the source code/diffs which we can then compare and commit if we deem them ok.
+It works my by making changes to the https://docs.openrewrite.org/concepts-explanations/lossless-semantic-trees[Lossless Semantic Trees] representing our source code and printing the modifications back to the source code/diffs which we can then compare and commit if we deem them ok.
 
