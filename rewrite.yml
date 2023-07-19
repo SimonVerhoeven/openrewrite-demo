@@ -1,0 +1,9 @@
+---
+type: specs.openrewrite.org/v1beta/recipe
+name: dev.simonverhoeven.sampleRecipe
+displayName: A simple recipe
+recipeList:
+  - org.openrewrite.java.ChangePackage:
+      oldPackageName: dev.simonverhoeven.openrewritedemo.oldorgname
+      newPackageName: dev.simonverhoeven.openrewritedemo.neworgname
+      recursive: null

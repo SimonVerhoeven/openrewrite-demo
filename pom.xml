@@ -43,6 +43,7 @@
                 <configuration>
                     <activeRecipes>
 <!--                        <recipe>org.openrewrite.java.RemoveUnusedImports</recipe>-->
+<!--                        <recipe>dev.simonverhoeven.sampleRecipe</recipe>-->
                     </activeRecipes>
                 </configuration>
             </plugin>

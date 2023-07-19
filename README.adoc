@@ -83,8 +83,34 @@ index d97b878..8e85aaf 100644
 -
  @SpringBootApplication
  public class OpenrewritedemoApplication {
-
 ----
+
+=== Adding a recipe with a configuration
+
+Some recipes require a configuration. Let's start with an easy one.
+Say your organisation changes name, and suddenly you need to rewrite your package names.
+
+For this we can use the `org.openrewrite.java.ChangePackage` recipe.
+
+To set it up we'll need to create a `rewrite.yml`  in which we'll define a recipe name, optionally a display name and the recipe list with the parameters.
+In this case we'll be renaming `dev.simonverhoeven.openrewritedemo.oldorgname` to `dev.simonverhoeven.openrewritedemo.neworgname`
+
+[source]
+----
+---
+type: specs.openrewrite.org/v1beta/recipe
+name: dev.simonverhoeven.sampleRecipe
+displayName: A simple recipe
+recipeList:
+  - org.openrewrite.java.ChangePackage:
+      oldPackageName: dev.simonverhoeven.openrewritedemo.oldorgname
+      newPackageName: dev.simonverhoeven.openrewritedemo.neworgname
+      recursive: null
+----
+
+Then we'll add `dev.simonverhoeven.sampleRecipe` to our active recipes.
+
+When we then run the rewrite we'll see that our `oldorgname` has been renamed to `neworgname` and that the package statement in our `Sample` file has also been adapted.
 
 == References
 https://docs.openrewrite.org/recipes[Recipe catalog]
