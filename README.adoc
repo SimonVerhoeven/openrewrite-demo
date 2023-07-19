@@ -9,7 +9,7 @@ It works my by making changes to the https://docs.openrewrite.org/concepts-expla
 
 '''
 
-== How to use
+== Setup
 
 OpenRewrite can be run using the Maven/Gradle build plugin tools, or directly from a java main method of a build tool plugin isn't possible (https://docs.openrewrite.org/running-recipes/running-rewrite-without-build-tool-plugins[see for reference])
 
@@ -50,17 +50,22 @@ rewrite {
 
 After which we can try `./mvnw rewrite:discover` or `./gradlew rewriteDiscover` to discover which recipes we can run from OpenRewrite using this setup. (we can add other sources/write our own).
 
-=== Standalone
+== Usage
 
-==== Recipe without configuration parameters
+=== Adding a recipe without configuration
 
-Certain recipes require no input such as the RemoveUnusedImports one
+Some OpenRewrite recipes require some configuration, but we'll start easy with a standard OpenRewrite which doesn't need any setup.
 
-[source]
-----
-mvn -U org.openrewrite.maven:rewrite-maven-plugin:run \
-  -Drewrite.activeRecipes=org.openrewrite.java.RemoveUnusedImports
-----
+For example if you have a project with a lot of unused imports you can use the `org.openrewrite.java.RemoveUnusedImports` recipe which is part of the core library.
+
+==== Maven
+a) run `mvn -U org.openrewrite.maven:rewrite-maven-plugin:run -Drewrite.activeRecipes=org.openrewrite.java.RemoveUnusedImports`
+
+b) add `<recipe>org.openrewrite.java.RemoveUnusedImports</recipe>` to the `<activeRecipes>` in your pom file and perform `./mvnw rewrite:run`
+
+==== Gradle
+
+Add `activeRecipe("org.openrewrite.java.RemoveUnusedImports")` and perform `./gradlew rewriteRun`
 
 If we were to run this one on the current project, and then execute a `git diff` we'd see:
 
@@ -80,3 +85,6 @@ index d97b878..8e85aaf 100644
  public class OpenrewritedemoApplication {
 
 ----
+
+== References
+https://docs.openrewrite.org/recipes[Recipe catalog]
