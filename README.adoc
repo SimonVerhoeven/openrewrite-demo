@@ -1,6 +1,8 @@
 = OpenRewrite - demo
 
 :toc:
+:toc-placement!:
+toc::[]
 
 This is a sample project to showcase some of the functionalities of https://https://docs.openrewrite.org/[OpenRewrite]
 
