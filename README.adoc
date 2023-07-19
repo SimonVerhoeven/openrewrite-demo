@@ -1,19 +1,17 @@
 = OpenRewrite - demo
-
 :toc:
-:toc-placement!:
-toc::[]
+:toc-placement:
 
 This is a sample project to showcase some of the functionalities of https://https://docs.openrewrite.org/[OpenRewrite]
 
 OpenRewrite allows us to do major refactorings on our source code using (prewritten) recipes.
-It works my by making changes to the https://docs.openrewrite.org/concepts-explanations/lossless-semantic-trees[Lossless Semantic Trees] representing our source code and printing the modifications back to the source code/diffs which we can then compare and commit if we deem them ok.
+It works by making changes to the https://docs.openrewrite.org/concepts-explanations/lossless-semantic-trees[Lossless Semantic Trees] representing our source code and printing the modifications back to the source code/diffs which we can then compare and commit if we deem them ok.
 
 '''
 
 == Setup
 
-OpenRewrite can be run using the Maven/Gradle build plugin tools, or directly from a java main method of a build tool plugin isn't possible (https://docs.openrewrite.org/running-recipes/running-rewrite-without-build-tool-plugins[see for reference])
+OpenRewrite can be run using the Maven/Gradle build plugin tools or directly from a java main method of a build tool plugin isn't possible (https://docs.openrewrite.org/running-recipes/running-rewrite-without-build-tool-plugins[see for reference])
 
 Both for Maven and Gradle we can run the migrations either by modifying our build files, or by running a shell command or init script respectively.
 
@@ -58,7 +56,7 @@ After which we can try `./mvnw rewrite:discover` or `./gradlew rewriteDiscover` 
 
 Some OpenRewrite recipes require some configuration, but we'll start easy with a standard OpenRewrite which doesn't need any setup.
 
-For example if you have a project with a lot of unused imports you can use the `org.openrewrite.java.RemoveUnusedImports` recipe which is part of the core library.
+For example, if you have a project with a lot of unused imports you can use the `org.openrewrite.java.RemoveUnusedImports` recipe which is part of the core library.
 
 ==== Maven
 a) run `mvn -U org.openrewrite.maven:rewrite-maven-plugin:run -Drewrite.activeRecipes=org.openrewrite.java.RemoveUnusedImports`
@@ -92,7 +90,7 @@ index d97b878..8e85aaf 100644
 Some recipes require a configuration. Let's start with an easy one.
 Say your organisation changes name, and suddenly you need to rewrite your package names.
 
-For this we can use the `org.openrewrite.java.ChangePackage` recipe.
+For this, we can use the `org.openrewrite.java.ChangePackage` recipe.
 
 To set it up we'll need to create a `rewrite.yml`  in which we'll define a recipe name, optionally a display name and the recipe list with the parameters.
 In this case we'll be renaming `dev.simonverhoeven.openrewritedemo.oldorgname` to `dev.simonverhoeven.openrewritedemo.neworgname`
