@@ -42,7 +42,7 @@
                 <version>5.3.1</version>
                 <configuration>
                     <activeRecipes>
-<!--                        <recipe>org.openrewrite.java.OrderImports</recipe>-->
+<!--                        <recipe>org.openrewrite.java.RemoveUnusedImports</recipe>-->
                     </activeRecipes>
                 </configuration>
             </plugin>
