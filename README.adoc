@@ -112,5 +112,58 @@ Then we'll add `dev.simonverhoeven.sampleRecipe` to our active recipes.
 
 When we then run the rewrite we'll see that our `oldorgname` has been renamed to `neworgname` and that the package statement in our `Sample` file has also been adapted.
 
+== The real power
+
+For now, we've used 2 quite basic recipes, which had relatively limited impact.
+So let's try something a bit more impactful.
+
+Say our company's finally ready to take the leap forwards to java 17 & spring boot 3.1. And we'd love to finally start using `spring-boot-starter-test`
+
+Now we'd like to take the sensible approach and make certain that all our test run possible. Now here's where we stumble upon a small hiccup. For some reason our project's using JUnit 4, not 5 and Spring boot 2.2 the backward compatibility with spring JUnit 4 has been dropped.
+
+Now we know that the upgrade to JUnit 5 entails a couple of steps for which there are recipes
+
+* `@Ignore` => `@Disabled`: `org.openrewrite.java.testing.junit5.IgnoreToDisabled`
+* `org.junit.Assert` => `org.junit.jupiter.api.Assertions`: `org.openrewrite.java.test.junit5.AssertToAssertions`
+* `org.junit.Test` => `org.junit.jupiter.api.Test`: `org.openrewrite.java.test.junit5.UpdateTestAnnotation`
+* @Junit 4's `@Rule ExpectedException => JUnit 5's `Assertions.assertThrows()`: `org.openrewrite.java.testing.junit5.ExpectedExceptionToAssertThrows`
+* ...
+
+And that's the premise behind OpenRewrite, large migrations in small steps.
+
+One of the recipes we can use for this is https://docs.openrewrite.org/recipes/java/testing/junit5/junit4to5migration[org.openrewrite.java.testing.junit5.JUnit4to5Migration] for which we'll need a dependency on `org.openrewrite.recipe:rewrite-testing-frameworks:2.0.7`.
+
+When we execute this recipe we'll get
+
+[code]
+----
+[WARNING] Changes have been made to pom.xml by:
+[WARNING]     org.openrewrite.java.testing.junit5.JUnit4to5Migration
+[WARNING]         org.openrewrite.java.dependencies.RemoveDependency: {groupId=junit, artifactId=junit}
+[WARNING]             org.openrewrite.maven.RemoveDependency: {groupId=junit, artifactId=junit}
+[WARNING]         org.openrewrite.java.dependencies.AddDependency: {groupId=org.junit.jupiter, artifactId=junit-jupiter, version=5.x, onlyIfUsing=org.junit.jupiter.api.Test, acceptTransitive=true}
+[WARNING]             org.openrewrite.maven.AddDependency: {groupId=org.junit.jupiter, artifactId=junit-jupiter, version=5.x, onlyIfUsing=org.junit.jupiter.api.Test, acceptTransitive=true}
+[WARNING] Changes have been made to src\test\java\dev\simonverhoeven\openrewritedemo\JunitTest.java by:
+[WARNING]     org.openrewrite.java.testing.junit5.JUnit4to5Migration
+[WARNING]         org.openrewrite.java.testing.junit5.IgnoreToDisabled
+[WARNING]             org.openrewrite.java.ChangeType: {oldFullyQualifiedTypeName=org.junit.Ignore, newFullyQualifiedTypeName=org.junit.jupiter.api.Disabled}
+[WARNING]         org.openrewrite.java.testing.junit5.AssertToAssertions
+[WARNING]         org.openrewrite.java.testing.junit5.CategoryToTag
+[WARNING]         org.openrewrite.java.testing.junit5.TemporaryFolderToTempDir
+[WARNING]         org.openrewrite.java.testing.junit5.UpdateBeforeAfterAnnotations
+[WARNING]         org.openrewrite.java.testing.junit5.UpdateTestAnnotation
+[WARNING]         org.openrewrite.java.testing.junit5.ExpectedExceptionToAssertThrows
+
+----
+
+If we then run a `git diff` to see the changes that were made we'll notice that our `pom.xml` has been upgraded, our imports are now from the `jupiter` hierarchy, `@Ignore` => `@Disabled`, `Assert.*` => `Assertions.*`, ...
+
+*note:* there are multiple recipes that can be used from this. For example there's also `org.openrewrite.recipe:rewrite-spring:4.35.0` which is a superset of of the JUnit 4 to 5 & Mockito 1 to 3 recipes.
+
+== Other interesting things
+
+Besides the obvious framework upgrade assistance, it can also aid us with resolving critical issues like `Spring4shell` through `org.openrewrite.java.spring.cve.Spring4Shell` for example.
+
+
 == References
 https://docs.openrewrite.org/recipes[Recipe catalog]

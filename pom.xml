@@ -44,8 +44,16 @@
                     <activeRecipes>
 <!--                        <recipe>org.openrewrite.java.RemoveUnusedImports</recipe>-->
 <!--                        <recipe>dev.simonverhoeven.sampleRecipe</recipe>-->
+<!--                        <recipe>org.openrewrite.java.testing.junit5.JUnit4to5Migration</recipe>-->
                     </activeRecipes>
                 </configuration>
+                <dependencies>
+<!--                    <dependency>-->
+<!--                        <groupId>org.openrewrite.recipe</groupId>-->
+<!--                        <artifactId>rewrite-testing-frameworks</artifactId>-->
+<!--                        <version>2.0.7</version>-->
+<!--                    </dependency>-->
+                </dependencies>
             </plugin>
         </plugins>
     </build>
