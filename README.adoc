@@ -167,6 +167,13 @@ If we then run a `git diff` to see the changes that were made we'll notice that 
 
 *note:* there are multiple recipes that can be used from this. For example there's also `org.openrewrite.recipe:rewrite-spring:4.35.0` which is a superset of of the JUnit 4 to 5 & Mockito 1 to 3 recipes.
 
+== How does it work?
+
+OpenRewrite makes changes to the **L**osless **S**emantic **T**ree representation of your code using *visitors*.
+*Visitors* are basically event handlers, which deal with *what* to do, and *when* to do it that get triggered as OpenRewrite goes through the LST translation of our codebase.
+These *visitors* can in turn be gathered into *recipes*
+
 == References
-* https://docs.openrewrite.org/recipes[Recipe catalog]: OpenRewrite recipe catalog
+* https://docs.openrewrite.org/[OpenRewrite documentation]
+* https://docs.openrewrite.org/recipes[Recipe catalog] OpenRewrite recipe catalog
 * https://github.com/spring-projects-experimental/spring-boot-migrator[Spring boot migrator] is a CLI tool which offers recipes to migrate/upgrade an application to Spring boot and is compatible with & uses OpenRewrite
