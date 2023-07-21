@@ -119,6 +119,11 @@ Then we'll add `dev.simonverhoeven.sampleRecipe` to our active recipes.
 
 When we then run the rewrite we'll see that our `oldorgname` has been renamed to `neworgname` and that the package statement in our `Sample` file has also been adapted.
 
+=== Without build tool plugins
+
+It is possible to use OpenRewrite without the build tool plugins, the hardest part is determining the applicable classpath for each set of files.
+A brief overview on the approach is documented https://docs.openrewrite.org/running-recipes/running-rewrite-without-build-tool-plugins[here] on the OpenRewrite website.
+
 == The real power
 
 For now, we've used 2 quite basic recipes, which had relatively limited impact.
@@ -177,3 +182,7 @@ These *visitors* can in turn be gathered into *recipes*
 * https://docs.openrewrite.org/[OpenRewrite documentation]
 * https://docs.openrewrite.org/recipes[Recipe catalog] OpenRewrite recipe catalog
 * https://github.com/spring-projects-experimental/spring-boot-migrator[Spring boot migrator] is a CLI tool which offers recipes to migrate/upgrade an application to Spring boot and is compatible with & uses OpenRewrite
+
+== Notes
+
+If you have a multimodule maven project you might run into errors when using the maven plugin, a workaround & more information is documented https://docs.openrewrite.org/running-recipes/multi-module-maven[here].
