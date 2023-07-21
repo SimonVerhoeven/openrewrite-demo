@@ -11,7 +11,7 @@ It works by making changes to the https://docs.openrewrite.org/concepts-explanat
 
 == Use cases
 
-* fixes: (log4shell, spring4shell, ...)
+* fixes: such as log4shell, spring4shell, ...
 * migrations: (log4j => slf4j, java 8 => 11 => 17, JUnit 4 => 5, ...)
 * code quality/refactoring: autoformatting, resolve issues by SAST tools, remove unused imports, apply a new convention using a recipe, ...
 * utility: generate a CycloneDx bill of materials
@@ -131,9 +131,9 @@ So let's try something a bit more impactful.
 
 Say our company's finally ready to take the leap forwards to java 17 & spring boot 3.1. And we'd love to finally start using `spring-boot-starter-test`
 
-Now we'd like to take the sensible approach and make certain that all our test run possible. Now here's where we stumble upon a small hiccup. For some reason our project's using JUnit 4, not 5 and Spring boot 2.2 the backward compatibility with spring JUnit 4 has been dropped.
+Now we'd like to take the sensible approach and make certain that all our test run properly using this library. Now here's where we stumble upon a small hiccup. For some reason our project's using JUnit 4, not 5 and since Spring boot 2.2 the backward compatibility with spring JUnit 4 has been dropped.
 
-Now we know that the upgrade to JUnit 5 entails a couple of steps for which there are recipes
+https://junit.org/junit5/docs/current/user-guide/#migrating-from-junit4[As documented] the upgrade to JUnit 5 entails a couple of steps for which there are recipes
 
 * `@Ignore` => `@Disabled`: `org.openrewrite.java.testing.junit5.IgnoreToDisabled`
 * `org.junit.Assert` => `org.junit.jupiter.api.Assertions`: `org.openrewrite.java.test.junit5.AssertToAssertions`
@@ -172,7 +172,70 @@ If we then run a `git diff` to see the changes that were made we'll notice that 
 
 *note:* there are multiple recipes that can be used from this. For example there's also `org.openrewrite.recipe:rewrite-spring:4.35.0` which is a superset of of the JUnit 4 to 5 & Mockito 1 to 3 recipes.
 
-== How does it work?
+Now we can run those tests, and everything looks fine and dandy.
+So now let's take the next step, and try a migration to java 17 and spring boot.
+
+In our pom.xml:
+
+[code]
+----
+<plugin>
+    <groupId>org.openrewrite.maven</groupId>
+    <artifactId>rewrite-maven-plugin</artifactId>
+    <version>5.3.1</version>
+    <configuration>
+        <activeRecipes>
+            <recipe>org.openrewrite.java.spring.boot3.UpgradeSpringBoot_3_1</recipe>
+        </activeRecipes>
+    </configuration>
+    <dependencies>
+        <dependency>
+            <groupId>org.openrewrite.recipe</groupId>
+            <artifactId>rewrite-spring</artifactId>
+            <version>5.0.5</version>
+        </dependency>
+    </dependencies>
+</plugin>
+----
+
+or build.gradle:
+[code]
+----
+plugins {
+    id("org.openrewrite.rewrite") version("6.1.18")
+}
+
+rewrite {
+    activeRecipe("org.openrewrite.java.spring.boot3.UpgradeSpringBoot_3_1")
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    rewrite("org.openrewrite.recipe:rewrite-spring:5.0.5")
+}
+----
+
+After running `./mvnw rewrite:run` or `./gradlew rewriteRun` we can use `git diff` to take a look at the results.
+
+And we can see a lot of interesting changes:
+
+* our outdated spring properties have been migrated
+* our Java version has been upgraded from java 8 to 17 (the new spring boot 3 baseline), including improvements such as:
+** using the BigDecimal RoundingMode enum rather than an int
+** `!emptyOptional.isPresent();` => `emptyOptional.isEmpty()`
+** concatenated text has been replaced with a text block
+** updated String formatting
+* JUnit 4 => JUnit 5
+* ...
+
+We got all this thanks to the recipe list of https://docs.openrewrite.org/recipes/java/spring/boot3/upgradespringboot_3_1[UpgradeSpringBoot_3_1]
+
+It's quite amazing to see what we can achieve with just this simple action.
+
+== How does OpenRewrite work?
 
 OpenRewrite makes changes to the **L**osless **S**emantic **T**ree representation of your code using *visitors*.
 *Visitors* are basically event handlers, which deal with *what* to do, and *when* to do it that get triggered as OpenRewrite goes through the LST translation of our codebase.
@@ -187,4 +250,4 @@ These *visitors* can in turn be gathered into *recipes*
 
 == Notes
 
-If you have a multimodule maven project you might run into errors when using the maven plugin, a workaround & more information is documented https://docs.openrewrite.org/running-recipes/multi-module-maven[here].
+If you have a multi-module maven project you might run into errors when using the maven plugin, a workaround & more information is documented https://docs.openrewrite.org/running-recipes/multi-module-maven[here].
