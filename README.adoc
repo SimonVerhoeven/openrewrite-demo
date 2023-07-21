@@ -9,6 +9,13 @@ It works by making changes to the https://docs.openrewrite.org/concepts-explanat
 
 '''
 
+== Use cases
+
+* fixes: (log4shell, spring4shell, ...)
+* migrations: (log4j => slf4j, java 8 => 11 => 17, JUnit 4 => 5, ...)
+* code quality/refactoring: autoformatting, resolve issues by SAST tools, remove unused imports, apply a new convention using a recipe, ...
+* utility: generate a CycloneDx bill of materials
+
 == Setup
 
 OpenRewrite can be run using the Maven/Gradle build plugin tools or directly from a java main method of a build tool plugin isn't possible (https://docs.openrewrite.org/running-recipes/running-rewrite-without-build-tool-plugins[see for reference])
@@ -160,10 +167,6 @@ If we then run a `git diff` to see the changes that were made we'll notice that 
 
 *note:* there are multiple recipes that can be used from this. For example there's also `org.openrewrite.recipe:rewrite-spring:4.35.0` which is a superset of of the JUnit 4 to 5 & Mockito 1 to 3 recipes.
 
-== Other interesting things
-
-Besides the obvious framework upgrade assistance, it can also aid us with resolving critical issues like `Spring4shell` through `org.openrewrite.java.spring.cve.Spring4Shell` for example.
-
-
 == References
-https://docs.openrewrite.org/recipes[Recipe catalog]
+* https://docs.openrewrite.org/recipes[Recipe catalog]: OpenRewrite recipe catalog
+* https://github.com/spring-projects-experimental/spring-boot-migrator[Spring boot migrator] is a CLI tool which offers recipes to migrate/upgrade an application to Spring boot and is compatible with & uses OpenRewrite
