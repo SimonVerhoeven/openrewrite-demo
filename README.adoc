@@ -180,8 +180,9 @@ These *visitors* can in turn be gathered into *recipes*
 
 == References
 * https://docs.openrewrite.org/[OpenRewrite documentation]
-* https://docs.openrewrite.org/authoring-recipes[creating your own recipe]
+* https://docs.openrewrite.org/authoring-recipes[Creating your own recipe]
 * https://docs.openrewrite.org/recipes[OpenRewrite Recipe catalog]
+* https://www.moderne.io/[Moderne] - platform to automate migrating, securing and maintaining source code. Uses OpenRewrite recipes, and offers certain extra features like data tables to view the changes that were made
 * https://github.com/spring-projects-experimental/spring-boot-migrator[Spring boot migrator] - a CLI tool which offers recipes to migrate/upgrade an application to Spring boot and is compatible with & uses OpenRewrite
 
 == Notes
