@@ -129,10 +129,13 @@ A brief overview on the approach is documented https://docs.openrewrite.org/runn
 For now, we've used 2 quite basic recipes, which had relatively limited impact.
 So let's try something a bit more impactful.
 
-Say our company's finally ready to take the leap forwards to java 17 & spring boot 3.1. And we'd love to finally start using `spring-boot-starter-test`
+=== Modernize
+
+Our company's finally ready to take the leap forwards to java 17 & spring boot 3.1. And we'd love to finally start using `spring-boot-starter-test`
 
 Now we'd like to take the sensible approach and make certain that all our test run properly using this library. Now here's where we stumble upon a small hiccup. For some reason our project's using JUnit 4, not 5 and since Spring boot 2.2 the backward compatibility with spring JUnit 4 has been dropped.
 
+==== JUnit 4 => JUnit 5
 https://junit.org/junit5/docs/current/user-guide/#migrating-from-junit4[As documented] the upgrade to JUnit 5 entails a couple of steps for which there are recipes
 
 * `@Ignore` => `@Disabled`: `org.openrewrite.java.testing.junit5.IgnoreToDisabled`
@@ -173,7 +176,9 @@ If we then run a `git diff` to see the changes that were made we'll notice that 
 *note:* there are multiple recipes that can be used from this. For example there's also `org.openrewrite.recipe:rewrite-spring:4.35.0` which is a superset of of the JUnit 4 to 5 & Mockito 1 to 3 recipes.
 
 Now we can run those tests, and everything looks fine and dandy.
-So now let's take the next step, and try a migration to java 17 and spring boot.
+
+==== Java 8 => 17 & Spring boot 2.17 => 3.1
+Let's take the next step, and try a migration to java 17 and spring boot.
 
 In our pom.xml:
 
@@ -234,6 +239,26 @@ And we can see a lot of interesting changes:
 We got all this thanks to the recipe list of https://docs.openrewrite.org/recipes/java/spring/boot3/upgradespringboot_3_1[UpgradeSpringBoot_3_1]
 
 It's quite amazing to see what we can achieve with just this simple action.
+
+==== Guava?
+
+One will quite likely encounter Guava in a lot of older projects, it offered us a lot of functionality that wasn't part of the JDK. Over the years a lot of this functionality has become part of it though, and after all the effort we've done to upgrade our project we'd like to use the standard JDK as much as possible.
+
+For example, in our link:src/main/java/dev/simonverhoeven/openrewritedemo/oldorgname/SampleService.java[SampleService] we'll see that a lot of things are being done using the Guava library.
+
+OpenRewrite has a lot of individual recipes for this, but we can also use `org.openrewrite.recipe:rewrite-migrate-java:2.0.8` which has no required input.
+
+So we can just add this one to our `pom.xml or build.gradle`, or execute it directly from the mvn command line.
+
+[code]
+----
+mvn -U org.openrewrite.maven:rewrite-maven-plugin:run \
+  -Drewrite.recipeArtifactCoordinates=org.openrewrite.recipe:rewrite-migrate-java:RELEASE \
+  -Drewrite.activeRecipes=org.openrewrite.java.migrate.guava.NoGuava
+----
+
+After running this command you can see that this recipe has managed to fully replace all usages of Guava. So if desired one can remove the library.
+
 
 == How does OpenRewrite work?
 
