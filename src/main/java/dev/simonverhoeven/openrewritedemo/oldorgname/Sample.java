@@ -18,6 +18,6 @@ public class Sample {
         String paragraph = "It is really annoying\n" +
                 "that we have to\n" +
                 "keep adding\n" +
-                "these lin breaks\n";
+                "these line breaks\n";
     }
 }
