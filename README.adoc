@@ -14,7 +14,7 @@ It works by making changes to the https://docs.openrewrite.org/concepts-explanat
 
 * fixes: such as log4shell, spring4shell, ...
 * migrations: (log4j => slf4j, java 8 => 11 => 17, JUnit 4 => 5, ...)
-* code quality/refactoring: autoformatting, resolve issues by SAST tools, remove unused imports, apply a new convention using a recipe, ...
+* static analysis fixes: autoformatting, resolve issues by SAST tools, remove unused imports, apply a new convention using a recipe, ...
 * utility: generate a CycloneDx bill of materials
 
 == How does OpenRewrite work?
@@ -155,7 +155,7 @@ mvn -U org.openrewrite.maven:rewrite-maven-plugin:run \
 
 After running this command you can see that this recipe has managed to fully replace all usages of Hamcrest. So if desired one can remove the library.
 
-=== Modernize
+=== Modernization
 
  And we'd love to finally start using `spring-boot-starter-test`
 
@@ -285,6 +285,61 @@ mvn -U org.openrewrite.maven:rewrite-maven-plugin:run \
 
 After running this command you can see that this recipe has managed to fully replace all usages of Guava. So if desired one can remove the library.
 
+=== Static analysis fixes
+
+Now that we've done all this, we're finally starting to reach our target. The next thing we'd like to tackle are the results we got from our upgraded Sonar instance.
+Whilst some of these will of course require human intervention, OpenRewrite offers a lot of (composite) recipes which will help us clean up the common issues which can be found https://docs.openrewrite.org/recipes/staticanalysis[here].
+
+We can run a lot of recipes manually, such as `org.openrewrite.staticanalysis.MissingOverrideAnnotation`, but our eye swiftly gets drawn to: https://docs.openrewrite.org/recipes/staticanalysis/commonstaticanalysis[org.openrewrite.staticanalysis.CommonStaticAnalysis] which is part of `org.openrewrite.recipe:rewrite-static-analysis:1.0.3` and has no required input.
+
+So we can just do
+[code]
+----
+mvn -U org.openrewrite.maven:rewrite-maven-plugin:run \
+  -Drewrite.recipeArtifactCoordinates=org.openrewrite.recipe:rewrite-static-analysis:RELEASE \
+  -Drewrite.activeRecipes=org.openrewrite.staticanalysis.CommonStaticAnalysis
+----
+
+And we'll notice that a lot of complaints such as:
+
+* missing serialVersionUID
+* inverted boolean checks
+* catch should do more than just rethrow
+* modifier order
+* missing braces
+* Strings not using .equals
+* unnecessary String#toString()
+* no double variable declaration
+* ...
+
+are resolved for us
+
+In our console we'll see:
+
+[code]
+----
+[WARNING]     org.openrewrite.staticanalysis.CommonStaticAnalysis
+[WARNING]         org.openrewrite.staticanalysis.BigDecimalRoundingConstantsToEnums
+[WARNING] Changes have been made to src\main\java\dev\simonverhoeven\openrewritedemo\oldorgname\SampleController.java by:
+[WARNING]     org.openrewrite.staticanalysis.CommonStaticAnalysis
+[WARNING]         org.openrewrite.staticanalysis.AddSerialVersionUidToSerializable
+[WARNING]         org.openrewrite.staticanalysis.BooleanChecksNotInverted
+[WARNING]         org.openrewrite.staticanalysis.CaseInsensitiveComparisonsDoNotChangeCase
+[WARNING]         org.openrewrite.staticanalysis.DefaultComesLast
+[WARNING]         org.openrewrite.staticanalysis.EmptyBlock
+[WARNING]         org.openrewrite.staticanalysis.FinalizePrivateFields
+[WARNING]         org.openrewrite.staticanalysis.FinalClass
+[WARNING]         org.openrewrite.staticanalysis.ForLoopIncrementInUpdate
+[WARNING]         org.openrewrite.staticanalysis.ModifierOrder
+[WARNING]         org.openrewrite.staticanalysis.MultipleVariableDeclarations
+[WARNING]         org.openrewrite.staticanalysis.NoToStringOnStringType
+[WARNING]         org.openrewrite.staticanalysis.RemoveExtraSemicolons
+[WARNING]         org.openrewrite.staticanalysis.RenamePrivateFieldsToCamelCase
+[WARNING]         org.openrewrite.staticanalysis.UseDiamondOperator
+[WARNING]         org.openrewrite.staticanalysis.InlineVariable
+----
+
+And looking at link:src/main/java/dev/simonverhoeven/openrewritedemo/oldorgname/SampleController.java[SampleController] will reveal a lot of changes
 
 == References
 * https://docs.openrewrite.org/[OpenRewrite documentation]
