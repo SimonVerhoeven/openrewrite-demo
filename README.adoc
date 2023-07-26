@@ -1,6 +1,7 @@
 = OpenRewrite - demo
 :toc:
 :toc-placement:
+:toclevels: 3
 
 This is a sample project to showcase some of the functionalities of https://https://docs.openrewrite.org/[OpenRewrite]
 
@@ -127,11 +128,28 @@ A brief overview on the approach is documented https://docs.openrewrite.org/runn
 == The real power
 
 For now, we've used 2 quite basic recipes, which had relatively limited impact.
-So let's try something a bit more impactful.
+Our company's finally ready to take the leap forwards to java 17 & spring boot 3.1.
+
+=== Migration
+
+Now taking a look at our project, we stumble upon an issue. We're still using `Hamcrest`, which is no longer actively being supported, and we've encountered some challenges with using it. So a migration to a different framework such as `AssertJ` seems apt.
+
+OpenRewrite has a lot of individual recipes for this, but we can also use `org.openrewrite.recipe:rewrite-testing-frameworks:2.0.7` => `org.openrewrite.java.testing.hamcrest.MigrateHamcrestToAssertJ` which has no required input.
+
+So we can just add this one to our `pom.xml or build.gradle`, or execute it directly from the mvn command line.
+
+[code]
+----
+mvn -U org.openrewrite.maven:rewrite-maven-plugin:run \
+  -Drewrite.recipeArtifactCoordinates=org.openrewrite.recipe:rewrite-testing-frameworks:RELEASE \
+  -Drewrite.activeRecipes=org.openrewrite.java.testing.hamcrest.MigrateHamcrestToAssertJ
+----
+
+After running this command you can see that this recipe has managed to fully replace all usages of Hamcrest. So if desired one can remove the library.
 
 === Modernize
 
-Our company's finally ready to take the leap forwards to java 17 & spring boot 3.1. And we'd love to finally start using `spring-boot-starter-test`
+ And we'd love to finally start using `spring-boot-starter-test`
 
 Now we'd like to take the sensible approach and make certain that all our test run properly using this library. Now here's where we stumble upon a small hiccup. For some reason our project's using JUnit 4, not 5 and since Spring boot 2.2 the backward compatibility with spring JUnit 4 has been dropped.
 
@@ -240,13 +258,13 @@ We got all this thanks to the recipe list of https://docs.openrewrite.org/recipe
 
 It's quite amazing to see what we can achieve with just this simple action.
 
-==== Guava?
+==== ¿Guava?
 
 One will quite likely encounter Guava in a lot of older projects, it offered us a lot of functionality that wasn't part of the JDK. Over the years a lot of this functionality has become part of it though, and after all the effort we've done to upgrade our project we'd like to use the standard JDK as much as possible.
 
 For example, in our link:src/main/java/dev/simonverhoeven/openrewritedemo/oldorgname/SampleService.java[SampleService] we'll see that a lot of things are being done using the Guava library.
 
-OpenRewrite has a lot of individual recipes for this, but we can also use `org.openrewrite.recipe:rewrite-migrate-java:2.0.8` which has no required input.
+OpenRewrite has a lot of individual recipes for this, but we can also use `org.openrewrite.recipe:rewrite-migrate-java:2.0.8` => `org.openrewrite.java.migrate.guava.NoGuava` which has no required input.
 
 So we can just add this one to our `pom.xml or build.gradle`, or execute it directly from the mvn command line.
 
