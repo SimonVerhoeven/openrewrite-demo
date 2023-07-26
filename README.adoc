@@ -17,6 +17,12 @@ It works by making changes to the https://docs.openrewrite.org/concepts-explanat
 * code quality/refactoring: autoformatting, resolve issues by SAST tools, remove unused imports, apply a new convention using a recipe, ...
 * utility: generate a CycloneDx bill of materials
 
+== How does OpenRewrite work?
+
+OpenRewrite makes changes to the **L**osless **S**emantic **T**ree representation of your code using *visitors*.
+*Visitors* are basically event handlers, which deal with *what* to do, and *when* to do it that get triggered as OpenRewrite goes through the LST translation of our codebase.
+These *visitors* can in turn be gathered into *recipes*
+
 == Setup
 
 OpenRewrite can be run using the Maven/Gradle build plugin tools or directly from a java main method of a build tool plugin isn't possible (https://docs.openrewrite.org/running-recipes/running-rewrite-without-build-tool-plugins[see for reference])
@@ -131,6 +137,8 @@ For now, we've used 2 quite basic recipes, which had relatively limited impact.
 Our company's finally ready to take the leap forwards to java 17 & spring boot 3.1.
 
 === Migration
+
+==== Hamcrest => AsertJ
 
 Now taking a look at our project, we stumble upon an issue. We're still using `Hamcrest`, which is no longer actively being supported, and we've encountered some challenges with using it. So a migration to a different framework such as `AssertJ` seems apt.
 
@@ -277,12 +285,6 @@ mvn -U org.openrewrite.maven:rewrite-maven-plugin:run \
 
 After running this command you can see that this recipe has managed to fully replace all usages of Guava. So if desired one can remove the library.
 
-
-== How does OpenRewrite work?
-
-OpenRewrite makes changes to the **L**osless **S**emantic **T**ree representation of your code using *visitors*.
-*Visitors* are basically event handlers, which deal with *what* to do, and *when* to do it that get triggered as OpenRewrite goes through the LST translation of our codebase.
-These *visitors* can in turn be gathered into *recipes*
 
 == References
 * https://docs.openrewrite.org/[OpenRewrite documentation]
