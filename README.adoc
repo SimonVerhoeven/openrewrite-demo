@@ -375,6 +375,35 @@ Which will scan for items that may potentially cause issues such as:
 * unhandled term signals
 * ...
 
+==== Secrets
+
+Hopefully one will never need these, but there are https://docs.openrewrite.org/recipes/java/security/secrets[recipes] to scan for different types of secrets within your codes.
+
+For example one can spot that in our link:src/main/java/dev/simonverhoeven/openrewritedemo/oldorgname/SampleController.java[SampleController] we have:
+
+[code]
+----
+private static final String ACCOUNT_KEY = "lJzRc1YdHaAA2KCNJJ1tkYwF/+mKK6Ygw0NGe170Xu592euJv2wYUtBlV8z+qnlcNQSnIYVTkLWntUO1F8j8rQ==";
+----
+
+After running:
+
+[code]
+----
+mvn -U org.openrewrite.maven:rewrite-maven-plugin:run \
+  -Drewrite.recipeArtifactCoordinates=org.openrewrite.recipe:rewrite-java-security:RELEASE \
+  -Drewrite.activeRecipes=org.openrewrite.java.security.secrets.FindAzureSecrets
+----
+
+We'll see that it has been transformed to:
+
+[code]
+----
+private static final String ACCOUNT_KEY = /*~~(Azure access key)~~>*/"lJzRc1YdHaAA2KCNJJ1tkYwF/+mKK6Ygw0NGe170Xu592euJv2wYUtBlV8z+qnlcNQSnIYVTkLWntUO1F8j8rQ==";
+----
+
+Which makes it a lot easier for us to find these kind of issues.
+
 ==== Generating a Bill of Materials (BOM)
 
 You might be asked to provide a list of your (transitive) project dependencies, this can easily be achieved using the `cyclonedx` goal.

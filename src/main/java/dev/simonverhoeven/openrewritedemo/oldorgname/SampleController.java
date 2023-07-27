@@ -16,6 +16,7 @@ import java.util.List;
 
 @RestController
 public class SampleController {
+    private static final String ACCOUNT_KEY = "lJzRc1YdHaAA2KCNJJ1tkYwF/+mKK6Ygw0NGe170Xu592euJv2wYUtBlV8z+qnlcNQSnIYVTkLWntUO1F8j8rQ==";
     private static final int MAX_LOANABLE_BOOKS = 10;
     Logger logger = Logger.getLogger(SampleController.class);
     @Autowired
