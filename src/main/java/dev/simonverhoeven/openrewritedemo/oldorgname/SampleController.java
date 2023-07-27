@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -69,6 +70,22 @@ public class SampleController {
         // quite useful to call toString on a String, and nice to have some extra semicolons
         String result = stringBuilder.toString().toString();;;;
         return result;
+    }
+
+    @RequestMapping(method = RequestMethod.GET, value = "/patternMatch")
+    public String patternMatch() {
+        logIfPatternMatches("patternMatching");
+        logIfPatternMatches(BigDecimal.TEN);
+        return "We hope to use java 17s instanceof pattern in the invoked function ";
+    }
+
+
+    private void logIfPatternMatches(Object input) {
+        if (input instanceof String && ((String) (input)).length() > 0) {
+            logger.info(input);
+        } else if (input instanceof BigDecimal && ((BigDecimal) (input)).intValue() > 5) {
+            logger.info(input);
+        }
     }
 }
 
