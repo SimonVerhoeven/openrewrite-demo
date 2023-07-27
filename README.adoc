@@ -15,7 +15,7 @@ It works by making changes to the https://docs.openrewrite.org/concepts-explanat
 * fixes: such as log4shell, spring4shell, ...
 * migrations: (log4j => slf4j, java 8 => 11 => 17, JUnit 4 => 5, ...)
 * static analysis fixes: autoformatting, resolve issues by SAST tools, remove unused imports, apply a new convention using a recipe, ...
-* utility: generate a CycloneDx bill of materials
+* utility: generate a CycloneDx bill of materials, updating GitHub actions,
 
 == How does OpenRewrite work?
 
@@ -340,6 +340,29 @@ In our console we'll see:
 ----
 
 And looking at link:src/main/java/dev/simonverhoeven/openrewritedemo/oldorgname/SampleController.java[SampleController] will reveal a lot of changes
+
+=== Utility
+
+Now OpenRewrite goes beyond just rewriting ones codebase. There a lot of other convenient features:
+
+==== Cloud suitability analysis
+
+OpenRewrite offers a lot of recipes https://docs.openrewrite.org/recipes/cloudsuitability[here] to help you determine the cloud suitability of your project
+
+One nice example is https://docs.openrewrite.org/recipes/cloudsuitability/findunsuitablecode[findunsuitablecode]
+
+Which will scan for items that may potentially cause issues such as:
+
+* usage of ehcache
+* usage of corba
+* hardcoded IP addresses
+* remote method invocation
+* unhandled term signals
+* ...
+
+==== Generating a Bill of Materials (BOM)
+
+You might be asked to provide a list of your (transitive) project dependencies, this can easily be achieved using the `cyclonedx` goal.
 
 == References
 * https://docs.openrewrite.org/[OpenRewrite documentation]
