@@ -408,6 +408,42 @@ Which makes it a lot easier for us to find these kind of issues.
 
 You might be asked to provide a list of your (transitive) project dependencies, this can easily be achieved using the `cyclonedx` goal.
 
+
+==== etc...
+
+OpenRewrite has so many more interesting recipes, and I'd invite you to take a gander at their recipe list.
+
+A last one I wanted to point out which showcases a way in which OpenRewrite can help with the readability of your codebase is the https://docs.openrewrite.org/recipes/sql/formatsql[formatsql] one
+
+Which automatically transform this:
+
+[code]
+----
+class Test {
+    String query = """
+            SELECT * FROM my_table
+            WHERE
+              something = 1;\
+            """;
+}
+----
+
+to
+
+[code]
+----
+class Test {
+    String query = """
+            SELECT
+              *
+            FROM
+              my_table
+            WHERE
+              something = 1;\
+            """;
+}
+----
+
 == References
 * https://docs.openrewrite.org/[OpenRewrite documentation]
 * https://docs.openrewrite.org/authoring-recipes[Creating your own recipe]
