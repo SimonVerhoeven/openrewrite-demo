@@ -345,6 +345,21 @@ And looking at link:src/main/java/dev/simonverhoeven/openrewritedemo/oldorgname/
 
 Now OpenRewrite goes beyond just rewriting ones codebase. There a lot of other convenient features:
 
+==== GitHub actions
+
+There are quite a bit of https://docs.openrewrite.org/recipes/github[recipes] to help you manage your GitHub workflows.
+
+For example, there's https://docs.openrewrite.org/recipes/github/setupjavaupgradejavaversion[setup-java] which updates your setup-java action if needed (and is part of the upgrade to spring boot 3.1 recipe for example)
+
+[code]
+----
+mvn -U org.openrewrite.maven:rewrite-maven-plugin:run \
+  -Drewrite.recipeArtifactCoordinates=org.openrewrite.recipe:rewrite-github-actions:RELEASE \
+  -Drewrite.activeRecipes=org.openrewrite.github.SetupJavaUpgradeJavaVersion
+----
+
+Or say if one wants to bulk update the used runners there's the https://docs.openrewrite.org/recipes/github/replacerunners[replacerunners] recipe.
+
 ==== Cloud suitability analysis
 
 OpenRewrite offers a lot of recipes https://docs.openrewrite.org/recipes/cloudsuitability[here] to help you determine the cloud suitability of your project
