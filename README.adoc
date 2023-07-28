@@ -421,9 +421,12 @@ Which automatically transform this:
 ----
 class Test {
     String query = """
-            SELECT * FROM my_table
-            WHERE
-              something = 1;\
+            SELECT b.book_id, b.title, COUNT(r.review_id) AS num_reviews,AVG(r.rating) AS median_rating FROM books b
+            JOIN reads rd ON b.book_id = rd.book_id JOIN readers
+            re ON rd.reader_id = re.reader_id
+            JOIN reviews r ON b.book_id = r.book_id
+            GROUP BY b.book_id, b.title ORDER
+            BY num_reviews DESC;\
             """;
 }
 ----
@@ -435,11 +438,20 @@ to
 class Test {
     String query = """
             SELECT
-              *
+              b.book_id,
+              b.title,
+              COUNT(r.review_id) AS num_reviews,
+              AVG(r.rating) AS median_rating
             FROM
-              my_table
-            WHERE
-              something = 1;\
+              books b
+              JOIN reads rd ON b.book_id = rd.book_id
+              JOIN readers re ON rd.reader_id = re.reader_id
+              JOIN reviews r ON b.book_id = r.book_id
+            GROUP BY
+              b.book_id,
+              b.title
+            ORDER BY
+              num_reviews DESC;\
             """;
 }
 ----
