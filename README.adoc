@@ -33,7 +33,7 @@ Both for Maven and Gradle we can run the migrations either by modifying our buil
 
 If we add the plugin to our pom.xml file
 
-[source]
+[source,xml]
 ----
 <plugin>
   <groupId>org.openrewrite.maven</groupId>
@@ -46,7 +46,7 @@ If we add the plugin to our pom.xml file
 
 For Gradle, we need to be certain that mavenCentral() is present in our repositories section, then we need to add the following to our build file:
 
-[source]
+[source,groovy]
 ----
 plugins {
     id 'org.openrewrite.rewrite' version '6.1.16'
@@ -111,7 +111,7 @@ For this, we can use the `org.openrewrite.java.ChangePackage` recipe.
 To set it up we'll need to create a `rewrite.yml`  in which we'll define a recipe name, optionally a display name and the recipe list with the parameters.
 In this case we'll be renaming `dev.simonverhoeven.openrewritedemo.oldorgname` to `dev.simonverhoeven.openrewritedemo.neworgname`
 
-[source]
+[source,yaml]
 ----
 ---
 type: specs.openrewrite.org/v1beta/recipe
@@ -148,7 +148,7 @@ OpenRewrite has a lot of individual recipes for this, but we can also use `org.o
 
 So we can just add this one to our `pom.xml or build.gradle`, or execute it directly from the mvn command line.
 
-[code]
+[source]
 ----
 mvn -U org.openrewrite.maven:rewrite-maven-plugin:run \
   -Drewrite.recipeArtifactCoordinates=org.openrewrite.recipe:rewrite-testing-frameworks:RELEASE \
@@ -178,7 +178,7 @@ One of the recipes we can use for this is https://docs.openrewrite.org/recipes/j
 
 When we execute this recipe we'll get
 
-[code]
+[source]
 ----
 [WARNING] Changes have been made to pom.xml by:
 [WARNING]     org.openrewrite.java.testing.junit5.JUnit4to5Migration
@@ -210,7 +210,7 @@ Let's take the next step, and try a migration to java 17 and spring boot.
 
 In our pom.xml:
 
-[code]
+[source,xml]
 ----
 <plugin>
     <groupId>org.openrewrite.maven</groupId>
@@ -232,7 +232,7 @@ In our pom.xml:
 ----
 
 or build.gradle:
-[code]
+[source,groovy]
 ----
 plugins {
     id("org.openrewrite.rewrite") version("6.1.18")
@@ -278,7 +278,7 @@ OpenRewrite has a lot of individual recipes for this, but we can also use `org.o
 
 So we can just add this one to our `pom.xml or build.gradle`, or execute it directly from the mvn command line.
 
-[code]
+[source]
 ----
 mvn -U org.openrewrite.maven:rewrite-maven-plugin:run \
   -Drewrite.recipeArtifactCoordinates=org.openrewrite.recipe:rewrite-migrate-java:RELEASE \
@@ -295,7 +295,7 @@ Whilst some of these will of course require human intervention, OpenRewrite offe
 We can run a lot of recipes manually, such as `org.openrewrite.staticanalysis.MissingOverrideAnnotation`, but our eye swiftly gets drawn to: https://docs.openrewrite.org/recipes/staticanalysis/commonstaticanalysis[org.openrewrite.staticanalysis.CommonStaticAnalysis] which is part of `org.openrewrite.recipe:rewrite-static-analysis:1.0.3` and has no required input.
 
 So we can just do
-[code]
+[source]
 ----
 mvn -U org.openrewrite.maven:rewrite-maven-plugin:run \
   -Drewrite.recipeArtifactCoordinates=org.openrewrite.recipe:rewrite-static-analysis:RELEASE \
@@ -318,7 +318,7 @@ are resolved for us
 
 In our console we'll see:
 
-[code]
+[source]
 ----
 [WARNING]     org.openrewrite.staticanalysis.CommonStaticAnalysis
 [WARNING]         org.openrewrite.staticanalysis.BigDecimalRoundingConstantsToEnums
@@ -353,7 +353,7 @@ There are quite a bit of https://docs.openrewrite.org/recipes/github[recipes] to
 
 For example, there's https://docs.openrewrite.org/recipes/github/setupjavaupgradejavaversion[setup-java] which updates your setup-java action if needed (and is part of the upgrade to spring boot 3.1 recipe for example)
 
-[code]
+[source]
 ----
 mvn -U org.openrewrite.maven:rewrite-maven-plugin:run \
   -Drewrite.recipeArtifactCoordinates=org.openrewrite.recipe:rewrite-github-actions:RELEASE \
@@ -383,14 +383,14 @@ Hopefully one will never need these, but there are https://docs.openrewrite.org/
 
 For example one can spot that in our link:src/main/java/dev/simonverhoeven/openrewritedemo/oldorgname/SampleController.java[SampleController] we have:
 
-[code]
+[source,java]
 ----
 private static final String ACCOUNT_KEY = "lJzRc1YdHaAA2KCNJJ1tkYwF/+mKK6Ygw0NGe170Xu592euJv2wYUtBlV8z+qnlcNQSnIYVTkLWntUO1F8j8rQ==";
 ----
 
 After running:
 
-[code]
+[source]
 ----
 mvn -U org.openrewrite.maven:rewrite-maven-plugin:run \
   -Drewrite.recipeArtifactCoordinates=org.openrewrite.recipe:rewrite-java-security:RELEASE \
@@ -399,7 +399,7 @@ mvn -U org.openrewrite.maven:rewrite-maven-plugin:run \
 
 We'll see that it has been transformed to:
 
-[code]
+[source,java]
 ----
 private static final String ACCOUNT_KEY = /*~~(Azure access key)~~>*/"lJzRc1YdHaAA2KCNJJ1tkYwF/+mKK6Ygw0NGe170Xu592euJv2wYUtBlV8z+qnlcNQSnIYVTkLWntUO1F8j8rQ==";
 ----
@@ -419,7 +419,7 @@ A last one I wanted to point out which showcases a way in which OpenRewrite can 
 
 Which automatically transform this:
 
-[code]
+[source,java]
 ----
 class Test {
     String query = """
@@ -435,7 +435,7 @@ class Test {
 
 to
 
-[code]
+[source,java]
 ----
 class Test {
     String query = """
