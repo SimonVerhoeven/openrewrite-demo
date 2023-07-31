@@ -17,7 +17,7 @@ It works by making changes to the https://docs.openrewrite.org/concepts-explanat
 
 == How does OpenRewrite work?
 
-OpenRewrite makes changes to the **L**osless **S**emantic **T**ree representation of your code using *visitors*.
+OpenRewrite makes changes to the **L**ossless **S**emantic **T**ree representation of your code using *visitors*.
 *Visitors* are basically event handlers, which deal with *what* to do, and *when* to do it that get triggered as OpenRewrite goes through the LST translation of our codebase.
 These *visitors* can in turn be gathered into *recipes*
 
