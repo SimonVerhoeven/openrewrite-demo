@@ -129,7 +129,7 @@ When we then run the rewrite we'll see that our `oldorgname` has been renamed to
 === Without build tool plugins
 
 It is possible to use OpenRewrite without the build tool plugins, the hardest part is determining the applicable classpath for each set of files.
-A brief overview of the approach is documented https://docs.openrewrite.org/running-recipes/running-rewrite-without-build-tool-plugins[here] on the OpenRewrite website.
+A brief overview of the approach is documented at https://docs.openrewrite.org/running-recipes/running-rewrite-without-build-tool-plugins[running rewrite without build tool plugins] on the OpenRewrite website.
 
 == The real power
 
@@ -288,7 +288,7 @@ After running this command you can see that this recipe has managed to fully rep
 === Static analysis fixes
 
 Now that we've done all this, we're finally starting to reach our target. The next thing we'd like to tackle are the results we got from our upgraded Sonar instance.
-Whilst some of these will of course require human intervention, OpenRewrite offers a lot of (composite) recipes which will help us clean up the common issues which can be found https://docs.openrewrite.org/recipes/staticanalysis[here].
+Whilst some of these will of course require human intervention, OpenRewrite offers a lot of (composite) recipes which will help us clean up the common issues which can be found at https://docs.openrewrite.org/recipes/staticanalysis[static analysis].
 
 We can run a lot of recipes manually, such as `org.openrewrite.staticanalysis.MissingOverrideAnnotation`, but our eye swiftly gets drawn to: https://docs.openrewrite.org/recipes/staticanalysis/commonstaticanalysis[org.openrewrite.staticanalysis.CommonStaticAnalysis] which is part of `org.openrewrite.recipe:rewrite-static-analysis:1.0.3` and has no required input.
 
@@ -362,7 +362,7 @@ Or say if one wants to bulk update the used runners there's the https://docs.ope
 
 ==== Cloud suitability analysis
 
-OpenRewrite offers a lot of recipes https://docs.openrewrite.org/recipes/cloudsuitability[here] to help you determine the cloud suitability of your project
+OpenRewrite offers a lot of recipes at https://docs.openrewrite.org/recipes/cloudsuitability[cloud suitability] to help you determine the cloud suitability of your project
 
 One nice example is https://docs.openrewrite.org/recipes/cloudsuitability/findunsuitablecode[findunsuitablecode]
 
@@ -466,4 +466,4 @@ class Test {
 
 == Notes
 
-If you have a multi-module maven project you might run into errors when using the maven plugin, a workaround & more information is documented https://docs.openrewrite.org/running-recipes/multi-module-maven[here].
+If you have a multi-module maven project you might run into errors when using the maven plugin, a workaround & more information is documented at https://docs.openrewrite.org/running-recipes/multi-module-maven[using multi module maven].
