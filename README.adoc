@@ -129,16 +129,16 @@ When we then run the rewrite we'll see that our `oldorgname` has been renamed to
 === Without build tool plugins
 
 It is possible to use OpenRewrite without the build tool plugins, the hardest part is determining the applicable classpath for each set of files.
-A brief overview on the approach is documented https://docs.openrewrite.org/running-recipes/running-rewrite-without-build-tool-plugins[here] on the OpenRewrite website.
+A brief overview of the approach is documented https://docs.openrewrite.org/running-recipes/running-rewrite-without-build-tool-plugins[here] on the OpenRewrite website.
 
 == The real power
 
 For now, we've used 2 quite basic recipes, which had relatively limited impact.
-Our company's finally ready to take the leap forwards to java 17 & spring boot 3.1.
+Now let's take a leap forward to java 17 & spring boot 3.1.
 
 === Migration
 
-==== Hamcrest => AsertJ
+==== Hamcrest => AssertJ
 
 Now taking a look at our project, we stumble upon an issue. We're still using `Hamcrest`, which is no longer actively being supported, and we've encountered some challenges with using it. So a migration to a different framework such as `AssertJ` seems apt.
 
@@ -157,7 +157,7 @@ After running this command you can see that this recipe has managed to fully rep
 
 === Modernization
 
- And we'd love to finally start using `spring-boot-starter-test`
+ And we'd love to finally start using `spring-boot-starter-test`.
 
 Now we'd like to take the sensible approach and make certain that all our test run properly using this library. Now here's where we stumble upon a small hiccup. For some reason our project's using JUnit 4, not 5 and since Spring boot 2.2 the backward compatibility with spring JUnit 4 has been dropped.
 
