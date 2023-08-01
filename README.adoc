@@ -60,7 +60,7 @@ rewrite {
 }
 ----
 
-**Note**: With gradle you can either add each dependency with the version number specified, or add `rewrite-recipe-bom` as a bill of materials dependency `rewrite(platform("org.openrewrite.recipe:rewrite-recipe-bom:2.1.0")) `
+**Note**: With Gradle. you can either add each dependency with the version number specified or add `rewrite-recipe-bom` as a bill of materials dependency `rewrite(platform("org.openrewrite.recipe:rewrite-recipe-bom:2.1.0")) `
 
 After which we can try `./mvnw rewrite:discover` or `./gradlew rewriteDiscover` to discover which recipes we can run from OpenRewrite using this setup. (we can add other sources/write our own).
 
