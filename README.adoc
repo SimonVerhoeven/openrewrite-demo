@@ -10,10 +10,10 @@ It works by making changes to the https://docs.openrewrite.org/concepts-explanat
 
 == Use cases
 
-* fixes: autoformatting, unused imports, apply new conventions using a recipe, ...
+* fixes: autoformatting, unused imports, applying new conventions using a recipe, ...
 * migrations: log4j => slf4j, java 8 => 11 => 17, JUnit 4 => 5, ...
 * static analysis fixes: resolve common issues reported by SAST tools, code cleanup, ... 
-* utility: generate a CycloneDx bill of materials, updating GitHub actions, ...
+* utility: generate a CycloneDx bill of materials, update GitHub actions, ...
 
 == How does OpenRewrite work?
 
@@ -25,7 +25,7 @@ These *visitors* can in turn be gathered into *recipes*.
 
 OpenRewrite can be run using the Maven/Gradle build plugin tools or directly from a java `main` method if a build tool plugin isn't possible (https://docs.openrewrite.org/running-recipes/running-rewrite-without-build-tool-plugins[see for reference])
 
-Both for Maven and Gradle we can run the migrations either by modifying our build files, or by running a shell command or init script respectively.
+Both for Maven and Gradle we can run the migrations either by modifying our build files or by running a shell command or init script respectively.
 
 === Maven
 
@@ -106,8 +106,8 @@ For example, your organisation changes its name, and suddenly you need to rewrit
 
 For this, we can use the `org.openrewrite.java.ChangePackage` recipe.
 
-To set it up we'll need to create a `rewrite.yml`  in which we'll define a recipe name, optionally a display name and the recipe list with the parameters.
-In this case we'll be renaming `dev.simonverhoeven.openrewritedemo.oldorgname` to `dev.simonverhoeven.openrewritedemo.neworgname`
+To set it up we'll need to create a `rewrite.yml`  in which we'll define a recipe name, optionally a display name, and the recipe list with the parameters.
+In this case, we'll be renaming `dev.simonverhoeven.openrewritedemo.oldorgname` to `dev.simonverhoeven.openrewritedemo.neworgname`
 
 [source,yaml]
 ----
@@ -134,7 +134,7 @@ A brief overview of the approach is documented at https://docs.openrewrite.org/r
 == The real power
 
 For now, we've used 2 quite basic recipes, which had relatively limited impact.
-Now let's take a leap forward to java 17 & Spring Boot 3.1.
+Now let's take a leap forward to Java 17 & Spring Boot 3.1.
 
 === Migration
 
@@ -159,7 +159,7 @@ After running this command you can see that this recipe has managed to fully rep
 
  And we'd love to finally start using `spring-boot-starter-test`.
 
-Now we'd like to take the sensible approach and make certain that all our test run properly using this library. Now here's where we stumble upon a small hiccup. For some reason our project's using JUnit 4, not 5 and since Spring boot 2.2 the backward compatibility with spring JUnit 4 has been dropped.
+Now we'd like to take the sensible approach and make certain that all of our tests run properly using this library. Now here's where we stumble upon a small hiccup. For some reason, our project's using JUnit 4, not 5 and since Spring Boot 2.2 the backward compatibility with Spring JUnit 4 has been dropped.
 
 ==== JUnit 4 => JUnit 5
 https://junit.org/junit5/docs/current/user-guide/#migrating-from-junit4[As documented] the upgrade to JUnit 5 entails a couple of steps for which there are recipes
@@ -199,12 +199,12 @@ When we execute this recipe we'll get
 
 If we then run a `git diff` to see the changes that were made we'll notice that our `pom.xml` has been upgraded, our imports are now from the `jupiter` hierarchy, `@Ignore` => `@Disabled`, `Assert.*` => `Assertions.*`, ...
 
-*note:* there are multiple recipes that can be used from this. For example there's also `org.openrewrite.java.spring.boot2.SpringBoot2JUnit4to5Migration` which is a superset of of the JUnit 4 to 5 & Mockito 1 to 3 recipes.
+*note:* there are multiple recipes that can be used from this. For example, there's also `org.openrewrite.java.spring.boot2.SpringBoot2JUnit4to5Migration` which is a superset of the JUnit 4 to 5 & Mockito 1 to 3 recipes.
 
 Now we can run those tests, and everything looks fine and dandy.
 
-==== Java 8 => 17 & Spring boot 2.17 => 3.1
-Let's take the next step, and try a migration to java 17 and spring boot.
+==== Java 8 => 17 & Spring Boot 2.17 => 3.1
+Let's take the next step, and try a migration to Java 17 and spring boot.
 
 In our pom.xml:
 
@@ -290,7 +290,7 @@ After running this command you can see that this recipe has managed to fully rep
 Now that we've done all this, we're finally starting to reach our target. The next thing we'd like to tackle are the results we got from our upgraded Sonar instance.
 Whilst some of these will of course require human intervention, OpenRewrite offers a lot of (composite) recipes which will help us clean up the common issues which can be found at https://docs.openrewrite.org/recipes/staticanalysis[static analysis].
 
-We can run a lot of recipes manually, such as `org.openrewrite.staticanalysis.MissingOverrideAnnotation`, but our eye swiftly gets drawn to: https://docs.openrewrite.org/recipes/staticanalysis/commonstaticanalysis[org.openrewrite.staticanalysis.CommonStaticAnalysis] which is part of `org.openrewrite.recipe:rewrite-static-analysis:1.0.3` and has no required input.
+We can run a lot of recipes manually, such as `org.openrewrite.staticanalysis.MissingOverrideAnnotation`, but our eye swiftly gets drawn to https://docs.openrewrite.org/recipes/staticanalysis/commonstaticanalysis[org.openrewrite.staticanalysis.CommonStaticAnalysis] which is part of `org.openrewrite.recipe:rewrite-static-analysis:1.0.3` and has no required input.
 
 So we can just do
 [source]
@@ -343,13 +343,13 @@ And looking at link:src/main/java/dev/simonverhoeven/openrewritedemo/oldorgname/
 
 === Utility
 
-Now OpenRewrite goes beyond just rewriting ones codebase. There a lot of other convenient features:
+Now OpenRewrite goes beyond just rewriting one's codebase. There are a lot of other convenient features:
 
 ==== GitHub actions
 
 There are quite a bit of https://docs.openrewrite.org/recipes/github[recipes] to help you manage your GitHub workflows.
 
-For example, there's https://docs.openrewrite.org/recipes/github/setupjavaupgradejavaversion[setup-java] which updates your setup-java action if needed (and is part of the upgrade to spring boot 3.1 recipe for example)
+For example, there's https://docs.openrewrite.org/recipes/github/setupjavaupgradejavaversion[setup-java] which updates your setup-java action if needed (and is part of the upgrade to Spring Boot 3.1 recipe for example)
 
 [source]
 ----
@@ -415,7 +415,7 @@ OpenRewrite has so many more interesting recipes, and I'd invite you to take a g
 
 A last one I wanted to point out which showcases a way in which OpenRewrite can help with the readability of your codebase is the https://docs.openrewrite.org/recipes/sql/formatsql[formatsql] one
 
-Which automatically transform this:
+Which automatically transforms this:
 
 [source,java]
 ----
@@ -461,9 +461,9 @@ class Test {
 * https://docs.openrewrite.org/authoring-recipes[Creating your own recipe]
 * https://docs.openrewrite.org/recipes[OpenRewrite Recipe catalog]
 * https://docs.openrewrite.org/concepts-explanations/recipes[OpenRewrite recipe explanation]
-* https://www.moderne.io/[Moderne] - platform to automate migrating, securing and maintaining source code. It uses OpenRewrite recipes, and offers certain extra features like data tables to view the changes that were made. It is free for open source projects.
-* https://github.com/spring-projects-experimental/spring-boot-migrator[Spring boot migrator] - a CLI tool which offers recipes to migrate/upgrade an application to Spring boot and is compatible with & uses OpenRewrite
+* https://www.moderne.io/[Moderne] - a platform to automate migrating, securing, and maintaining source code. It uses OpenRewrite recipes and offers certain extra features like data tables to view the changes that were made. It is free for open source projects.
+* https://github.com/spring-projects-experimental/spring-boot-migrator[Spring boot migrator] - a CLI tool that offers recipes to migrate/upgrade an application to Spring boot and is compatible with & uses OpenRewrite
 
 == Notes
 
-If you have a multi-module maven project you might run into errors when using the maven plugin, a workaround & more information is documented at https://docs.openrewrite.org/running-recipes/multi-module-maven[using multi module maven].
+If you have a multi-module maven project you might run into errors when using the maven plugin, a workaround & more information is documented at https://docs.openrewrite.org/running-recipes/multi-module-maven[using multi-module maven].
