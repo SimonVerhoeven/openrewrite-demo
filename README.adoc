@@ -19,11 +19,11 @@ It works by making changes to the https://docs.openrewrite.org/concepts-explanat
 
 OpenRewrite makes changes to the **L**ossless **S**emantic **T**ree representation of your code using *visitors*.
 *Visitors* are basically event handlers, which deal with *what* to do, and *when* to do it that get triggered as OpenRewrite goes through the LST translation of our codebase.
-These *visitors* can in turn be gathered into *recipes*
+These *visitors* can in turn be gathered into *recipes*.
 
 == Setup
 
-OpenRewrite can be run using the Maven/Gradle build plugin tools or directly from a java main method of a build tool plugin isn't possible (https://docs.openrewrite.org/running-recipes/running-rewrite-without-build-tool-plugins[see for reference])
+OpenRewrite can be run using the Maven/Gradle build plugin tools or directly from a java `main` method if a build tool plugin isn't possible (https://docs.openrewrite.org/running-recipes/running-rewrite-without-build-tool-plugins[see for reference])
 
 Both for Maven and Gradle we can run the migrations either by modifying our build files, or by running a shell command or init script respectively.
 
@@ -42,7 +42,7 @@ If we add the plugin to our pom.xml file
 
 === Gradle
 
-For Gradle, we need to be certain that mavenCentral() is present in our repositories section, then we need to add the following to our build file:
+For Gradle, we need to be certain that `mavenCentral()` is present in our repositories section, then we need to add the following to our build file:
 
 [source,groovy]
 ----
@@ -68,7 +68,7 @@ After which we can try `./mvnw rewrite:discover` or `./gradlew rewriteDiscover` 
 
 === Adding a recipe without configuration
 
-Some OpenRewrite recipes require some configuration, but we'll start easy with a standard OpenRewrite which doesn't need any setup.
+Some OpenRewrite recipes require configuration, but we'll start easy with a standard OpenRewrite which doesn't need any setup.
 
 For example, if you have a project with a lot of unused imports you can use the `org.openrewrite.java.RemoveUnusedImports` recipe which is part of the core library.
 
@@ -134,7 +134,7 @@ A brief overview of the approach is documented at https://docs.openrewrite.org/r
 == The real power
 
 For now, we've used 2 quite basic recipes, which had relatively limited impact.
-Now let's take a leap forward to java 17 & spring boot 3.1.
+Now let's take a leap forward to java 17 & Spring Boot 3.1.
 
 === Migration
 
@@ -199,7 +199,7 @@ When we execute this recipe we'll get
 
 If we then run a `git diff` to see the changes that were made we'll notice that our `pom.xml` has been upgraded, our imports are now from the `jupiter` hierarchy, `@Ignore` => `@Disabled`, `Assert.*` => `Assertions.*`, ...
 
-*note:* there are multiple recipes that can be used from this. For example there's also `org.openrewrite.recipe:rewrite-spring:4.35.0` which is a superset of of the JUnit 4 to 5 & Mockito 1 to 3 recipes.
+*note:* there are multiple recipes that can be used from this. For example there's also `org.openrewrite.java.spring.boot2.SpringBoot2JUnit4to5Migration` which is a superset of of the JUnit 4 to 5 & Mockito 1 to 3 recipes.
 
 Now we can run those tests, and everything looks fine and dandy.
 
@@ -223,7 +223,7 @@ In our pom.xml:
         <dependency>
             <groupId>org.openrewrite.recipe</groupId>
             <artifactId>rewrite-spring</artifactId>
-            <version>5.0.5</version>
+            <version>5.0.6</version>
         </dependency>
     </dependencies>
 </plugin>
