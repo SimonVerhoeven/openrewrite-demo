@@ -90,7 +90,7 @@
 <!--                        <groupId>org.openrewrite.recipe</groupId>-->
 <!--                        <artifactId>rewrite-static-analysis</artifactId>-->
 <!--                        <version>1.0.7</version>-->
-<!--                    </dependency-->
+<!--                    </dependency>-->
                 </dependencies>
             </plugin>
         </plugins>
