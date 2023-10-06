@@ -18,7 +18,7 @@ dependencies {
     api("com.google.guava:guava:20.0")
     testImplementation("org.hamcrest:hamcrest:2.2")
     testImplementation("junit:junit:4.13.2")
-    rewrite(platform("org.openrewrite.recipe:rewrite-recipe-bom:2.3.0"))
+    rewrite(platform("org.openrewrite.recipe:rewrite-recipe-bom:2.3.1"))
     rewrite("org.openrewrite.recipe:rewrite-testing-frameworks")
     rewrite("org.openrewrite.recipe:rewrite-spring")
     rewrite("org.openrewrite.recipe:rewrite-migrate-java")
