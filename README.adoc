@@ -272,7 +272,7 @@ One will quite likely encounter Guava in a lot of older projects, it offered us 
 
 For example, in our link:src/main/java/dev/simonverhoeven/openrewritedemo/oldorgname/SampleService.java[SampleService] we'll see that a lot of things are being done using the Guava library.
 
-OpenRewrite has a lot of individual recipes for this, but we can also use `org.openrewrite.recipe:rewrite-migrate-java:2.1.0` => `org.openrewrite.java.migrate.guava.NoGuava` which has no required input.
+OpenRewrite has a lot of individual recipes for this, but we can also use `org.openrewrite.recipe:rewrite-migrate-java:2.1.1` => `org.openrewrite.java.migrate.guava.NoGuava` which has no required input.
 
 So we can just add this one to our `pom.xml or build.gradle`, or execute it directly from the mvn command line.
 
