@@ -36,7 +36,7 @@ If we add the plugin to our pom.xml file
 <plugin>
   <groupId>org.openrewrite.maven</groupId>
   <artifactId>rewrite-maven-plugin</artifactId>
-  <version>5.7.1</version>
+  <version>5.12.0</version>
 </plugin>
 ----
 
@@ -47,7 +47,7 @@ For Gradle, we need to be certain that `mavenCentral()` is present in our reposi
 [source,groovy]
 ----
 plugins {
-    id 'org.openrewrite.rewrite' version '6.3.16'
+    id 'org.openrewrite.rewrite' version '6.5.3'
 }
 
 repositories {
@@ -60,7 +60,7 @@ rewrite {
 }
 ----
 
-**Note**: With Gradle. you can either add each dependency with the version number specified or add `rewrite-recipe-bom` as a bill of materials dependency `rewrite(platform("org.openrewrite.recipe:rewrite-recipe-bom:2.3.0")) `
+**Note**: With Gradle. you can either add each dependency with the version number specified or add `rewrite-recipe-bom` as a bill of materials dependency `rewrite(platform("org.openrewrite.recipe:rewrite-recipe-bom:2.5.0")) `
 
 After which we can try `./mvnw rewrite:discover` or `./gradlew rewriteDiscover` to discover which recipes we can run from OpenRewrite using this setup. (we can add other sources/write our own).
 
@@ -142,7 +142,7 @@ Now let's take a leap forward to Java 17 & Spring Boot 3.1.
 
 Now taking a look at our project, we stumble upon an issue. We're still using `Hamcrest`, which is no longer actively being supported, and we've encountered some challenges with using it. So a migration to a different framework such as `AssertJ` seems apt.
 
-OpenRewrite has a lot of individual recipes for this, but we can also use `org.openrewrite.recipe:rewrite-testing-frameworks:2.0.11` => `org.openrewrite.java.testing.hamcrest.MigrateHamcrestToAssertJ` which has no required input.
+OpenRewrite has a lot of individual recipes for this, but we can also use `org.openrewrite.recipe:rewrite-testing-frameworks:2.1.0` => `org.openrewrite.java.testing.hamcrest.MigrateHamcrestToAssertJ` which has no required input.
 
 So we can just add this one to our `pom.xml or build.gradle`, or execute it directly from the mvn command line.
 
@@ -172,7 +172,7 @@ https://junit.org/junit5/docs/current/user-guide/#migrating-from-junit4[As docum
 
 And that's the premise behind OpenRewrite, large migrations in small steps.
 
-One of the recipes we can use for this is https://docs.openrewrite.org/recipes/java/testing/junit5/junit4to5migration[org.openrewrite.java.testing.junit5.JUnit4to5Migration] for which we'll need a dependency on `org.openrewrite.recipe:rewrite-testing-frameworks:2.0.11`.
+One of the recipes we can use for this is https://docs.openrewrite.org/recipes/java/testing/junit5/junit4to5migration[org.openrewrite.java.testing.junit5.JUnit4to5Migration] for which we'll need a dependency on `org.openrewrite.recipe:rewrite-testing-frameworks:2.1.0`.
 
 When we execute this recipe we'll get
 
@@ -213,7 +213,7 @@ In our pom.xml:
 <plugin>
     <groupId>org.openrewrite.maven</groupId>
     <artifactId>rewrite-maven-plugin</artifactId>
-    <version>5.7.1</version>
+    <version>5.12.0</version>
     <configuration>
         <activeRecipes>
             <recipe>org.openrewrite.java.spring.boot3.UpgradeSpringBoot_3_1</recipe>
@@ -223,7 +223,7 @@ In our pom.xml:
         <dependency>
             <groupId>org.openrewrite.recipe</groupId>
             <artifactId>rewrite-spring</artifactId>
-            <version>5.0.6</version>
+            <version>5.1.1</version>
         </dependency>
     </dependencies>
 </plugin>
@@ -233,7 +233,7 @@ or build.gradle:
 [source,groovy]
 ----
 plugins {
-    id("org.openrewrite.rewrite") version("6.3.16")
+    id("org.openrewrite.rewrite") version("6.5.3")
 }
 
 rewrite {
@@ -245,7 +245,7 @@ repositories {
 }
 
 dependencies {
-    rewrite("org.openrewrite.recipe:rewrite-spring:5.0.10")
+    rewrite("org.openrewrite.recipe:rewrite-spring:5.1.1")
 }
 ----
 
@@ -272,7 +272,7 @@ One will quite likely encounter Guava in a lot of older projects, it offered us 
 
 For example, in our link:src/main/java/dev/simonverhoeven/openrewritedemo/oldorgname/SampleService.java[SampleService] we'll see that a lot of things are being done using the Guava library.
 
-OpenRewrite has a lot of individual recipes for this, but we can also use `org.openrewrite.recipe:rewrite-migrate-java:2.1.1` => `org.openrewrite.java.migrate.guava.NoGuava` which has no required input.
+OpenRewrite has a lot of individual recipes for this, but we can also use `org.openrewrite.recipe:rewrite-migrate-java:2.3.0` => `org.openrewrite.java.migrate.guava.NoGuava` which has no required input.
 
 So we can just add this one to our `pom.xml or build.gradle`, or execute it directly from the mvn command line.
 
@@ -290,7 +290,7 @@ After running this command you can see that this recipe has managed to fully rep
 Now that we've done all this, we're finally starting to reach our target. The next thing we'd like to tackle are the results we got from our upgraded Sonar instance.
 Whilst some of these will of course require human intervention, OpenRewrite offers a lot of (composite) recipes which will help us clean up the common issues which can be found at https://docs.openrewrite.org/recipes/staticanalysis[static analysis].
 
-We can run a lot of recipes manually, such as `org.openrewrite.staticanalysis.MissingOverrideAnnotation`, but our eye swiftly gets drawn to https://docs.openrewrite.org/recipes/staticanalysis/commonstaticanalysis[org.openrewrite.staticanalysis.CommonStaticAnalysis] which is part of `org.openrewrite.recipe:rewrite-static-analysis:1.0.7` and has no required input.
+We can run a lot of recipes manually, such as `org.openrewrite.staticanalysis.MissingOverrideAnnotation`, but our eye swiftly gets drawn to https://docs.openrewrite.org/recipes/staticanalysis/commonstaticanalysis[org.openrewrite.staticanalysis.CommonStaticAnalysis] which is part of `org.openrewrite.recipe:rewrite-static-analysis:1.1.0` and has no required input.
 
 So we can just do
 [source]
