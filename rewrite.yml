@@ -7,3 +7,15 @@ recipeList:
       oldPackageName: dev.simonverhoeven.openrewritedemo.oldorgname
       newPackageName: dev.simonverhoeven.openrewritedemo.neworgname
       recursive: null
+
+---
+type: specs.openrewrite.org/v1beta/recipe
+name: dev.simonverhoeven.preconditionExample
+preconditions:
+  - org.openrewrite.java.search.HasJavaVersion:
+      version: 8.X
+recipeList:
+  - org.openrewrite.text.FindAndReplace:
+      find: somethingold
+      replace: somethingnew
+      filePattern: '**/application.properties'

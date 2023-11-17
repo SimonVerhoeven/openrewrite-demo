@@ -63,6 +63,7 @@
                     <activeRecipes>
 <!--                        <recipe>org.openrewrite.java.RemoveUnusedImports</recipe>-->
 <!--                        <recipe>dev.simonverhoeven.sampleRecipe</recipe>-->
+<!--                        <recipe>dev.simonverhoeven.preconditionExample</recipe>-->
 <!--                        <recipe>org.openrewrite.java.testing.junit5.JUnit4to5Migration</recipe>-->
 <!--                        <recipe>org.openrewrite.java.spring.boot3.UpgradeSpringBoot_3_1</recipe>-->
 <!--                        <recipe>org.openrewrite.java.migrate.guava.NoGuava</recipe>-->

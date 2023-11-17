@@ -126,6 +126,34 @@ Then we'll add `dev.simonverhoeven.sampleRecipe` to our active recipes.
 
 When we then run the rewrite we'll see that our `oldorgname` has been renamed to `neworgname` and that the package statement in our `Sample` file has also been adapted.
 
+==== Preconditions
+
+As of Rewrite version 8.9.0 we can once again write `Preconditions` for our recipes like in Rewrite 7.
+
+Those conditions allow us to introduce some conditionality to our recipes, such as for example only applying a recipe in case of certain Java versions using `org.openrewrite.java.search.HasJavaVersion`. In case we define multiple conditions then a file must meet them all before any changes are applied.
+
+NOTE: Precondition recipes can make changes to determine whether the condition is met, but are not included in the final result.
+
+For example:
+
+[source,yaml]
+----
+---
+type: specs.openrewrite.org/v1beta/recipe
+name: dev.simonverhoeven.preconditionExample
+preconditions:
+  - org.openrewrite.java.search.HasJavaVersion:
+      version: 8.X
+recipeList:
+  - org.openrewrite.text.FindAndReplace:
+      find: somethingold
+      replace: somethingnew
+      filePattern: '**/application.properties'
+----
+
+Our `FindAndReplace` recipe will only be applied in case the `HasJavaVersion` recipe condition is met.
+
+
 === Without build tool plugins
 
 It is possible to use OpenRewrite without the build tool plugins, the hardest part is determining the applicable classpath for each set of files.
