@@ -1,7 +1,7 @@
 plugins {
     `java-library`
     `maven-publish`
-    id("org.openrewrite.rewrite") version "6.5.3"
+    id("org.openrewrite.rewrite") version "6.25.1"
 }
 
 repositories {
@@ -18,7 +18,7 @@ dependencies {
     api("com.google.guava:guava:20.0")
     testImplementation("org.hamcrest:hamcrest:2.2")
     testImplementation("junit:junit:4.13.2")
-    rewrite(platform("org.openrewrite.recipe:rewrite-recipe-bom:2.5.0"))
+    rewrite(platform("org.openrewrite.recipe:rewrite-recipe-bom:2.21.0"))
     rewrite("org.openrewrite.recipe:rewrite-testing-frameworks")
     rewrite("org.openrewrite.recipe:rewrite-spring")
     rewrite("org.openrewrite.recipe:rewrite-migrate-java")
@@ -49,7 +49,7 @@ rewrite {
 //            "org.openrewrite.java.RemoveUnusedImports",
 //            "dev.simonverhoeven.sampleRecipe",
 //            "org.openrewrite.java.testing.junit5.JUnit4to5Migration",
-//            "org.openrewrite.java.spring.boot3.UpgradeSpringBoot_3_1",
+//            "org.openrewrite.java.spring.boot3.UpgradeSpringBoot_3_3",
 //            "org.openrewrite.java.migrate.guava.NoGuava",
 //            "org.openrewrite.java.testing.hamcrest.MigrateHamcrestToAssertJ",
 //            "org.openrewrite.staticanalysis.CommonStaticAnalysis",
