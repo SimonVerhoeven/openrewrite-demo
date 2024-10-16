@@ -294,6 +294,8 @@ We got all this thanks to the recipe list of https://docs.openrewrite.org/recipe
 
 It's quite amazing to see what we can achieve with just this simple action.
 
+We can also get conditional upgrades such as the one provided by https://docs.openrewrite.org/recipes/java/spring/boot3/enablevirtualthreads[Enable virtual threads] which will enable Virtual Threads in case we're running Java 21.
+
 ==== ¿Guava?
 
 One will quite likely encounter Guava in a lot of older projects, it offered us a lot of functionality that wasn't part of the JDK. Over the years a lot of this functionality has become part of it though, and after all the effort we've done to upgrade our project we'd like to use the standard JDK as much as possible.
