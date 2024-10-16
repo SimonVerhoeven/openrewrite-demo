@@ -486,6 +486,12 @@ class Test {
 }
 ----
 
+== Tools
+
+https://aws.amazon.com/q/developer/[Amazon Q Developer]
+https://www.ibm.com/watsonx[IBM watsonx™ Code Assistant for Enterprise Java Applications]
+https://docs.vmware.com/en/Tanzu-Spring-Runtime/Commercial/Tanzu-Spring-Runtime/index-app-advisor.html[Broadcom’s App Advisor]
+
 == References
 * https://docs.openrewrite.org/[OpenRewrite documentation]
 * https://docs.openrewrite.org/authoring-recipes[Creating your own recipe]
