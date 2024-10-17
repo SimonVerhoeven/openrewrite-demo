@@ -486,6 +486,16 @@ class Test {
 }
 ----
 
+== Generative AI
+
+Proper expectation management is needed, as it's still very much a work in progress.
+Initially even the generated recipes didn't compile
+
+Currently the scope has been reduced to limit the use cases, yet still adding value such as:
+
+* https://docs.openrewrite.org/recipes/ai/spellcheckcommentsinfrench[Fix mis-encoded comments in French]
+* https://docs.openrewrite.org/recipes/ai/findcommentslanguage[https://docs.openrewrite.org/recipes/ai/findcommentslanguage]
+
 == Tools
 
 * https://aws.amazon.com/q/developer/[Amazon Q Developer]
