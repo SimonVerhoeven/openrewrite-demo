@@ -270,6 +270,35 @@ We could for example use them to facilitate replacing `StringUtils.equals(..)` w
 
 A Refaster template recipe is an imperative recipe that's generated automatically when we build our Java classes that container on or more Refaster templates.
 
+There are a couple of requirements for a class to be considered a Refaster template:
+
+* All argument types and names must match
+* There is exactly 1 `@AfterTemplate` annotated method, all other methods must be annotated with `@BeforeTemplate`
+* There are multiple methods with the same return type
+
+[source,java]
+----
+import com.google.errorprone.refaster.annotation.AfterTemplate;
+import com.google.errorprone.refaster.annotation.BeforeTemplate;
+
+public class StringIsEmpty {
+  @BeforeTemplate
+  boolean equalsEmptyString(String string) {
+    return string.equals("");
+  }
+
+  @BeforeTemplate
+  boolean lengthEquals0(String string) {
+    return string.length() == 0;
+  }
+
+  @AfterTemplate
+  boolean optimizedMethod(String string) {
+    return string.isEmpty();
+  }
+}
+----
+
 A couple of things to keep in mind in regard to a Refaster recipe:
 
 * It should contain one or more `@BeforeTemplate`
