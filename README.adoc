@@ -262,6 +262,12 @@ public class EnclosedToNested extends Recipe {
 }
 ----
 
+=== Refaster recipes
+
+For straightforward refactorings we can also make use of https://errorprone.info/docs/refaster[Refaster] templates.
+These replacements which offer compiler and type support allow us to do clear before & after replacements, with the caveat they're whitespace agnostic.
+We could for example use them to facilitate replacing `StringUtils.equals(..)` with `Objects.equals(..)`.
+
 == The real power
 
 For now, we've used 2 quite basic recipes, which had relatively limited impact.
