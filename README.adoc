@@ -268,6 +268,14 @@ For straightforward refactorings we can also make use of https://errorprone.info
 These replacements which offer compiler and type support allow us to do clear before & after replacements, with the caveat they're whitespace agnostic.
 We could for example use them to facilitate replacing `StringUtils.equals(..)` with `Objects.equals(..)`.
 
+A Refaster template recipe is an imperative recipe that's generated automatically when we build our Java classes that container on or more Refaster templates.
+
+A couple of things to keep in mind in regard to a Refaster recipe:
+
+* It should contain one or more `@BeforeTemplate`
+* It should contain one `@AfterTemplate`
+* If there are multiple templates in there Recipe, then file name should be in the plural
+
 == The real power
 
 For now, we've used 2 quite basic recipes, which had relatively limited impact.
