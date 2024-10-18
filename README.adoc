@@ -303,7 +303,8 @@ A couple of things to keep in mind in regard to a Refaster recipe:
 
 * It should contain one or more `@BeforeTemplate`
 * It should contain one `@AfterTemplate`
-* If there are multiple templates in there Recipe, then file name should be in the plural
+* If there are multiple templates in the Recipe, the file name should be in the plural
+* When creating a recipe we'll need to add an annotation processor (`org.openrewrite:rewrite-templating`)
 
 == The real power
 
