@@ -1,21 +1,16 @@
 package dev.simonverhoeven.openrewritedemo;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-class Solution {
-	public int mostWordsFound(String[] s) {
+import java.math.BigDecimal;
 
-		
-		List<Integer> al = new ArrayList<Integer>();
-		for(int i=0;i<s.length;i++);
-		{
-			String[] arr = s[i].split(" ");
-			al.add(arr.length);
-		}
-		Collections.sort(al);
-		Collections.reverse(al);
-		return al.get(0);
+@SpringBootApplication
+public class OpenrewritedemoApplication {
+
+	public static void main(String[] args) {
+		SpringApplication.run(OpenrewritedemoApplication.class, args);
 	}
-} 
+
+}
+
