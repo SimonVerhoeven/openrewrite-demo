@@ -1,7 +1,7 @@
 plugins {
     `java-library`
     `maven-publish`
-    id("org.openrewrite.rewrite") version "6.25.1"
+    id("org.openrewrite.rewrite") version "7.2.1"
 }
 
 repositories {
