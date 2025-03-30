@@ -661,6 +661,10 @@ The Moderne platform now supports AI to help us compose, search for, and be reco
 * https://docs.openrewrite.org/concepts-explanations/recipes[OpenRewrite recipe explanation]
 * https://www.moderne.io/[Moderne] - a platform to automate migrating, securing, and maintaining source code. It uses OpenRewrite recipes and offers certain extra features like data tables to view the changes that were made. It is free for open source projects.
 * https://github.com/spring-projects-experimental/spring-boot-migrator[Spring boot migrator] - a CLI tool that offers recipes to migrate/upgrade an application to Spring boot and is compatible with & uses OpenRewrite
+* https://www.moderne.ai/content-library/ai-for-mass-scale-code-refactoring-and-analysis-oreilly[O'Reilly: AI for
+Mass-Scale Code
+Refactoring and
+Analysis]
 
 == Notes
 
