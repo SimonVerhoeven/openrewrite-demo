@@ -317,7 +317,7 @@ Now let's take a leap forward to Java 21 & Spring Boot 3.3.
 
 Now taking a look at our project, we stumble upon an issue. We're still using `Hamcrest`, which is no longer actively being supported, and we've encountered some challenges with using it. So a migration to a different framework such as `AssertJ` seems apt.
 
-OpenRewrite has a lot of individual recipes for this, but we can also use `org.openrewrite.recipe:rewrite-testing-frameworks:3.4.0` => `org.openrewrite.java.testing.hamcrest.MigrateHamcrestToAssertJ` which has no required input.
+OpenRewrite has a lot of individual recipes for this, but we can also use `org.openrewrite.recipe:rewrite-testing-frameworks:3.3.0` => `org.openrewrite.java.testing.hamcrest.MigrateHamcrestToAssertJ` which has no required input.
 
 So we can just add this one to our `pom.xml or build.gradle`, or execute it directly from the mvn command line.
 
@@ -347,7 +347,7 @@ https://junit.org/junit5/docs/current/user-guide/#migrating-from-junit4[As docum
 
 And that's the premise behind OpenRewrite, large migrations in small steps.
 
-One of the recipes we can use for this is https://docs.openrewrite.org/recipes/java/testing/junit5/junit4to5migration[org.openrewrite.java.testing.junit5.JUnit4to5Migration] for which we'll need a dependency on `org.openrewrite.recipe:rewrite-testing-frameworks:3.4.0`.
+One of the recipes we can use for this is https://docs.openrewrite.org/recipes/java/testing/junit5/junit4to5migration[org.openrewrite.java.testing.junit5.JUnit4to5Migration] for which we'll need a dependency on `org.openrewrite.recipe:rewrite-testing-frameworks:3.3.0`.
 
 When we execute this recipe we'll get
 
@@ -449,7 +449,7 @@ One will quite likely encounter Guava in a lot of older projects, it offered us 
 
 For example, in our link:src/main/java/dev/simonverhoeven/openrewritedemo/oldorgname/SampleService.java[SampleService] we'll see that a lot of things are being done using the Guava library.
 
-OpenRewrite has a lot of individual recipes for this, but we can also use `org.openrewrite.recipe:rewrite-migrate-java:3.4.0` => `org.openrewrite.java.migrate.guava.NoGuava` which has no required input.
+OpenRewrite has a lot of individual recipes for this, but we can also use `org.openrewrite.recipe:rewrite-migrate-java:3.3.0` => `org.openrewrite.java.migrate.guava.NoGuava` which has no required input.
 
 So we can just add this one to our `pom.xml or build.gradle`, or execute it directly from the mvn command line.
 
