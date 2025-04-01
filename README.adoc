@@ -647,6 +647,11 @@ Currently the scope has been reduced to limit the use cases, yet still adding va
 
 The Moderne platform now supports AI to help us compose, search for, and be recommended recipes.
 
+== Moderne CLI
+
+This tool leverages the Moderne platform and Moderne DX to enable us to create LST artifactors over multiple repositories and run recipes against them from our own laptop.
+Certain recipes are only executable through this tool.
+
 == Tools
 
 * https://aws.amazon.com/q/developer/[Amazon Q Developer]
