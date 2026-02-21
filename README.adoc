@@ -4,7 +4,7 @@
 :toclevels: 3
 
 OpenRewrite allows us to do major refactorings on our source code using (prewritten) recipes.
-It works by making changes to the https://docs.openrewrite.org/concepts-explanations/lossless-semantic-trees[Lossless Semantic Trees] representing our source code and printing the modifications back to the source code/diffs which we can then compare and commit if we deem them ok.
+It works by making changes to the https://docs.openrewrite.org/concepts-explanations/lossless-semantic-trees[Lossless Semantic Trees] representing our source code and printing the modifications back to the source code/diffs, which we can then compare and commit if we deem them ok.
 
 '''
 
@@ -18,14 +18,14 @@ It works by making changes to the https://docs.openrewrite.org/concepts-explanat
 == How does OpenRewrite work?
 
 OpenRewrite makes changes to the **L**ossless **S**emantic **T**ree representation of your code using *visitors*.
-*Visitors* are basically event handlers, which deal with *what* to do, and *when* to do it that get triggered as OpenRewrite goes through the LST translation of our codebase.
+*Visitors* are basically event handlers, which deal with *what* to do, and *when* to do it, that get triggered as OpenRewrite goes through the LST translation of our codebase.
 These *visitors* can in turn be gathered into *recipes*.
 
 == Setup
 
-OpenRewrite can be run using the Maven/Gradle build plugin tools or directly from a java `main` method if a build tool plugin isn't possible (https://docs.openrewrite.org/running-recipes/running-rewrite-without-build-tool-plugins[see for reference])
+OpenRewrite can be run using the Maven/Gradle build plugin tools or directly from a Java `main` method if a build tool plugin isn't possible (https://docs.openrewrite.org/running-recipes/running-rewrite-without-build-tool-plugins[see for reference])
 
-Both for Maven and Gradle we can run the migrations either by modifying our build files or by running a shell command or init script respectively.
+Both for Maven and Gradle, we can run the migrations either by modifying our build files or by running a shell command or an init script, respectively.
 
 === Maven
 
@@ -60,17 +60,17 @@ rewrite {
 }
 ----
 
-**Note**: With Gradle. you can either add each dependency with the version number specified or add `rewrite-recipe-bom` as a bill of materials dependency `rewrite(platform("org.openrewrite.recipe:rewrite-recipe-bom:2.21.0")) `
+**Note**: With Gradle, you can either add each dependency with the version number specified or add `rewrite-recipe-bom` as a bill of materials dependency `rewrite(platform("org.openrewrite.recipe:rewrite-recipe-bom:2.21.0")) `
 
-After which we can try `./mvnw rewrite:discover` or `./gradlew rewriteDiscover` to discover which recipes we can run from OpenRewrite using this setup. (we can add other sources/write our own).
+After which we can try `./mvnw rewrite:discover` or `./gradlew rewriteDiscover` to discover which recipes we can run from OpenRewrite using this setup. (We can add other sources/write our own).
 
 == Usage
 
 === Adding a recipe without configuration
 
-Some OpenRewrite recipes require configuration, but we'll start easy with a standard OpenRewrite which doesn't need any setup.
+Some OpenRewrite recipes require configuration, but we'll start easy with a standard OpenRewrite, which doesn't need any setup.
 
-For example, if you have a project with a lot of unused imports you can use the `org.openrewrite.java.RemoveUnusedImports` recipe which is part of the core library.
+For example, if you have a project with a lot of unused imports, you can use the `org.openrewrite.java.RemoveUnusedImports` recipe, which is part of the core library.
 
 ==== Maven
 a) run `mvn -U org.openrewrite.maven:rewrite-maven-plugin:run -Drewrite.activeRecipes=org.openrewrite.java.RemoveUnusedImports`
@@ -81,7 +81,7 @@ b) add `<recipe>org.openrewrite.java.RemoveUnusedImports</recipe>` to the `<acti
 
 Add `activeRecipe("org.openrewrite.java.RemoveUnusedImports")` and perform `./gradlew rewriteRun`
 
-If we were to run this one on the current project, and then execute a `git diff` we'd see:
+If we were to run this one on the current project, and then execute a `git diff`, we'd see:
 
 [source]
 ----
@@ -106,7 +106,7 @@ For example, your organisation changes its name, and suddenly you need to rewrit
 
 For this, we can use the `org.openrewrite.java.ChangePackage` recipe.
 
-To set it up we'll need to create a `rewrite.yml`  in which we'll define a recipe name, optionally a display name, and the recipe list with the parameters.
+To set it up, we'll need to create a `rewrite.yml`  in which we'll define a recipe name, optionally a display name, and the recipe list with the parameters.
 In this case, we'll be renaming `dev.simonverhoeven.openrewritedemo.oldorgname` to `dev.simonverhoeven.openrewritedemo.neworgname`
 
 [source,yaml]
@@ -124,13 +124,13 @@ recipeList:
 
 Then we'll add `dev.simonverhoeven.sampleRecipe` to our active recipes.
 
-When we then run the rewrite we'll see that our `oldorgname` has been renamed to `neworgname` and that the package statement in our `Sample` file has also been adapted.
+When we then run the rewrite, we'll see that our `oldorgname` has been renamed to `neworgname` and that the package statement in our `Sample` file has also been adapted.
 
 ==== Preconditions
 
 As of Rewrite version 8.9.0 we can once again write `Preconditions` for our recipes like in Rewrite 7.
 
-Those conditions allow us to introduce some conditionality to our recipes, such as for example only applying a recipe in case of certain Java versions using `org.openrewrite.java.search.HasJavaVersion`. In case we define multiple conditions then a file must meet them all before any changes are applied.
+Those conditions allow us to introduce some conditionality to our recipes, such as, for example, only applying a recipe in case of certain Java versions using `org.openrewrite.java.search.HasJavaVersion`. In case we define multiple conditions, then a file must meet them all before any changes are applied.
 
 NOTE: Precondition recipes can make changes to determine whether the condition is met, but are not included in the final result.
 
@@ -155,14 +155,14 @@ Our `FindAndReplace` recipe will only be applied in case the `HasJavaVersion` re
 
 === Without build tool plugins
 
-It is possible to use OpenRewrite without the build tool plugins, the hardest part is determining the applicable classpath for each set of files.
+It is possible to use OpenRewrite without the build tool plugins; the hardest part is determining the applicable classpath for each set of files.
 A brief overview of the approach is documented at https://docs.openrewrite.org/running-recipes/running-rewrite-without-build-tool-plugins[running rewrite without build tool plugins] on the OpenRewrite website.
 
 == Writing our own recipe
 
 === Java recipe
 
-We can write a Java refactoring recipe quite easily, it just needs
+We can write a Java refactoring recipe quite easily; it just needs
 
 * Fully qualified name
 * Serializable constructor
@@ -264,16 +264,16 @@ public class EnclosedToNested extends Recipe {
 
 === Refaster recipes
 
-For straightforward refactorings we can also make use of https://errorprone.info/docs/refaster[Refaster] templates.
-These replacements which offer compiler and type support allow us to do clear before & after replacements, with the caveat they're whitespace agnostic.
+For straightforward refactorings, we can also make use of https://errorprone.info/docs/refaster[Refaster] templates.
+These replacements, which offer compiler and type support, allow us to do clear before & after replacements, with the caveat that they're whitespace agnostic.
 We could for example use them to facilitate replacing `StringUtils.equals(..)` with `Objects.equals(..)`.
 
-A Refaster template recipe is an imperative recipe that's generated automatically when we build our Java classes that container on or more Refaster templates.
+A Refaster template recipe is an imperative recipe that's generated automatically when we build our Java classes that contain one or more Refaster templates.
 
 There are a couple of requirements for a class to be considered a Refaster template:
 
 * All argument types and names must match
-* There is exactly 1 `@AfterTemplate` annotated method, all other methods must be annotated with `@BeforeTemplate`
+* There is exactly 1 `@AfterTemplate` annotated method; all other methods must be annotated with `@BeforeTemplate`
 * There are multiple methods with the same return type
 
 [source,java]
@@ -299,25 +299,25 @@ public class StringIsEmpty {
 }
 ----
 
-A couple of things to keep in mind in regard to a Refaster recipe:
+A couple of things to keep in mind regarding a Refaster recipe:
 
 * It should contain one or more `@BeforeTemplate`
 * It should contain one `@AfterTemplate`
 * If there are multiple templates in the Recipe, the file name should be in the plural
-* When creating a recipe we'll need to add an annotation processor (`org.openrewrite:rewrite-templating`)
+* When creating a recipe, we'll need to add an annotation processor (`org.openrewrite:rewrite-templating`)
 
 == The real power
 
-For now, we've used 2 quite basic recipes, which had relatively limited impact.
+For now, we've used 2 quite basic recipes, which had a relatively limited impact.
 Now let's take a leap forward to Java 21 & Spring Boot 3.3.
 
 === Migration
 
 ==== Hamcrest => AssertJ
 
-Now taking a look at our project, we stumble upon an issue. We're still using `Hamcrest`, which is no longer actively being supported, and we've encountered some challenges with using it. So a migration to a different framework such as `AssertJ` seems apt.
+Now taking a look at our project, we stumble upon an issue. We're still using `Hamcrest`, which is no longer actively being supported, and we've encountered some challenges with using it. So a migration to a different framework, such as `AssertJ`, seems apt.
 
-OpenRewrite has a lot of individual recipes for this, but we can also use `org.openrewrite.recipe:rewrite-testing-frameworks:3.27.0` => `org.openrewrite.java.testing.hamcrest.MigrateHamcrestToAssertJ` which has no required input.
+OpenRewrite has a lot of individual recipes for this, but we can also use `org.openrewrite.recipe:rewrite-testing-frameworks:3.27.0` => `org.openrewrite.java.testing.hamcrest.MigrateHamcrestToAssertJ`, which has no required input.
 
 So we can just add this one to our `pom.xml or build.gradle`, or execute it directly from the mvn command line.
 
@@ -328,16 +328,16 @@ mvn -U org.openrewrite.maven:rewrite-maven-plugin:run \
   -Drewrite.activeRecipes=org.openrewrite.java.testing.hamcrest.MigrateHamcrestToAssertJ
 ----
 
-After running this command you can see that this recipe has managed to fully replace all usages of Hamcrest. So if desired one can remove the library.
+After running this command, you can see that this recipe has managed to fully replace all usages of Hamcrest. So if desired, one can remove the library.
 
 === Modernization
 
  And we'd love to finally start using `spring-boot-starter-test`.
 
-Now we'd like to take the sensible approach and make certain that all of our tests run properly using this library. Now here's where we stumble upon a small hiccup. For some reason, our project's using JUnit 4, not 5 and since Spring Boot 2.2 the backward compatibility with Spring JUnit 4 has been dropped.
+Now we'd like to take the sensible approach and make certain that all of our tests run properly using this library. Now here's where we stumble upon a small hiccup. For some reason, our project is using JUnit 4, not 5, and since Spring Boot 2.2, the backward compatibility with Spring JUnit 4 has been dropped.
 
 ==== JUnit 4 => JUnit 5
-https://junit.org/junit5/docs/current/user-guide/#migrating-from-junit4[As documented] the upgrade to JUnit 5 entails a couple of steps for which there are recipes
+https://junit.org/junit5/docs/current/user-guide/#migrating-from-junit4[As documented], the upgrade to JUnit 5 entails a couple of steps for which there are recipes
 
 * `@Ignore` => `@Disabled`: `org.openrewrite.java.testing.junit5.IgnoreToDisabled`
 * `org.junit.Assert` => `org.junit.jupiter.api.Assertions`: `org.openrewrite.java.test.junit5.AssertToAssertions`
@@ -345,11 +345,11 @@ https://junit.org/junit5/docs/current/user-guide/#migrating-from-junit4[As docum
 * @Junit 4's `@Rule ExpectedException => JUnit 5's `Assertions.assertThrows()`: `org.openrewrite.java.testing.junit5.ExpectedExceptionToAssertThrows`
 * ...
 
-And that's the premise behind OpenRewrite, large migrations in small steps.
+And that's the premise behind OpenRewrite: large migrations in small steps.
 
 One of the recipes we can use for this is https://docs.openrewrite.org/recipes/java/testing/junit5/junit4to5migration[org.openrewrite.java.testing.junit5.JUnit4to5Migration] for which we'll need a dependency on `org.openrewrite.recipe:rewrite-testing-frameworks:3.27.0`.
 
-When we execute this recipe we'll get
+When we execute this recipe, we'll get
 
 [source]
 ----
@@ -372,14 +372,14 @@ When we execute this recipe we'll get
 
 ----
 
-If we then run a `git diff` to see the changes that were made we'll notice that our `pom.xml` has been upgraded, our imports are now from the `jupiter` hierarchy, `@Ignore` => `@Disabled`, `Assert.*` => `Assertions.*`, ...
+If we then run a `git diff` to see the changes that were made, we'll notice that our `pom.xml` has been upgraded, our imports are now from the `jupiter` hierarchy, `@Ignore` => `@Disabled`, `Assert.*` => `Assertions.*`, ...
 
 *note:* there are multiple recipes that can be used from this. For example, there's also `org.openrewrite.java.spring.boot2.SpringBoot2JUnit4to5Migration` which is a superset of the JUnit 4 to 5 & Mockito 1 to 3 recipes.
 
 Now we can run those tests, and everything looks fine and dandy.
 
 ==== Java 8 => 17 => 21 & Spring Boot 2.17 => 3.3
-Let's take the next step, and try a migration to Java 17 and spring boot.
+Let's take the next step and try a migration to Java 17 and Spring Boot.
 
 In our pom.xml:
 
@@ -429,7 +429,7 @@ After running `./mvnw rewrite:run` or `./gradlew rewriteRun` we can use `git dif
 And we can see a lot of interesting changes:
 
 * our outdated spring properties have been migrated
-* our Java version has been upgraded from java 8 to 17 (the new spring boot 3 baseline), including improvements such as:
+* our Java version has been upgraded from Java 8 to 17 (the new Spring Boot 3 baseline), including improvements such as:
 ** using the BigDecimal RoundingMode enum rather than an int
 ** `!emptyOptional.isPresent();` => `emptyOptional.isEmpty()`
 ** concatenated text has been replaced with a text block
@@ -441,15 +441,15 @@ We got all this thanks to the recipe list of https://docs.openrewrite.org/recipe
 
 It's quite amazing to see what we can achieve with just this simple action.
 
-We can also get conditional upgrades such as the one provided by https://docs.openrewrite.org/recipes/java/spring/boot3/enablevirtualthreads[Enable virtual threads] which will enable Virtual Threads in case we're running Java 21.
+We can also get conditional upgrades, such as the one provided by https://docs.openrewrite.org/recipes/java/spring/boot3/enablevirtualthreads[Enable virtual threads], which will enable Virtual Threads in case we're running Java 21.
 
 ==== ¿Guava?
 
-One will quite likely encounter Guava in a lot of older projects, it offered us a lot of functionality that wasn't part of the JDK. Over the years a lot of this functionality has become part of it though, and after all the effort we've done to upgrade our project we'd like to use the standard JDK as much as possible.
+One will quite likely encounter Guava in a lot of older projects; it offered us a lot of functionality that wasn't part of the JDK. Over the years, a lot of this functionality has become part of it, though, and after all the effort we've done to upgrade our project, we'd like to use the standard JDK as much as possible.
 
-For example, in our link:src/main/java/dev/simonverhoeven/openrewritedemo/oldorgname/SampleService.java[SampleService] we'll see that a lot of things are being done using the Guava library.
+For example, in our link:src/main/java/dev/simonverhoeven/openrewritedemo/oldorgname/SampleService.java[SampleService], we'll see that a lot of things are being done using the Guava library.
 
-OpenRewrite has a lot of individual recipes for this, but we can also use `org.openrewrite.recipe:rewrite-migrate-java:3.27.1` => `org.openrewrite.java.migrate.guava.NoGuava` which has no required input.
+OpenRewrite has a lot of individual recipes for this, but we can also use `org.openrewrite.recipe:rewrite-migrate-java:3.27.1` => `org.openrewrite.java.migrate.guava.NoGuava`, which has no required input.
 
 So we can just add this one to our `pom.xml or build.gradle`, or execute it directly from the mvn command line.
 
@@ -460,7 +460,7 @@ mvn -U org.openrewrite.maven:rewrite-maven-plugin:run \
   -Drewrite.activeRecipes=org.openrewrite.java.migrate.guava.NoGuava
 ----
 
-After running this command you can see that this recipe has managed to fully replace all usages of Guava. So if desired one can remove the library.
+After running this command, you can see that this recipe has managed to fully replace all usages of Guava. So if desired, one can remove the library.
 
 === Static analysis fixes
 
@@ -477,7 +477,7 @@ mvn -U org.openrewrite.maven:rewrite-maven-plugin:run \
   -Drewrite.activeRecipes=org.openrewrite.staticanalysis.CommonStaticAnalysis
 ----
 
-And we'll notice that a lot of complaints such as:
+And we'll notice that a lot of complaints, such as:
 
 * missing serialVersionUID
 * inverted boolean checks
@@ -491,7 +491,7 @@ And we'll notice that a lot of complaints such as:
 
 are resolved for us
 
-In our console we'll see:
+In our console, we'll see:
 
 [source]
 ----
@@ -524,9 +524,9 @@ Now OpenRewrite goes beyond just rewriting one's codebase. There are a lot of ot
 
 ==== GitHub actions
 
-There are quite a bit of https://docs.openrewrite.org/recipes/github[recipes] to help you manage your GitHub workflows.
+There are quite a few https://docs.openrewrite.org/recipes/github[recipes] to help you manage your GitHub workflows.
 
-For example, there's https://docs.openrewrite.org/recipes/github/setupjavaupgradejavaversion[setup-java] which updates your setup-java action if needed (and is part of the upgrade to Spring Boot 3.3 recipe for example)
+For example, there's https://docs.openrewrite.org/recipes/github/setupjavaupgradejavaversion[setup-java] which updates your setup-java action if needed (and is part of the upgrade to Spring Boot 3.3 recipe, for example)
 
 [source]
 ----
@@ -535,7 +535,7 @@ mvn -U org.openrewrite.maven:rewrite-maven-plugin:run \
   -Drewrite.activeRecipes=org.openrewrite.github.SetupJavaUpgradeJavaVersion
 ----
 
-Or say if one wants to bulk update the used runners there's the https://docs.openrewrite.org/recipes/github/replacerunners[replacerunners] recipe.
+Or say if one wants to bulk update the used runners, there's the https://docs.openrewrite.org/recipes/github/replacerunners[replacerunners] recipe.
 
 ==== Cloud suitability analysis
 
@@ -543,10 +543,10 @@ OpenRewrite offers a lot of recipes at https://docs.openrewrite.org/recipes/clou
 
 One nice example is https://docs.openrewrite.org/recipes/cloudsuitability/findunsuitablecode[findunsuitablecode]
 
-Which will scan for items that may potentially cause issues such as:
+Which will scan for items that may potentially cause issues, such as:
 
 * usage of ehcache
-* usage of corba
+* usage of CORBA
 * hardcoded IP addresses
 * remote method invocation
 * unhandled term signals
@@ -556,7 +556,7 @@ Which will scan for items that may potentially cause issues such as:
 
 Hopefully one will never need these, but there are https://docs.openrewrite.org/recipes/java/security/secrets[recipes] to scan for different types of secrets within your codes.
 
-For example one can spot that in our link:src/main/java/dev/simonverhoeven/openrewritedemo/oldorgname/SampleController.java[SampleController] we have:
+For example, one can spot that in our link:src/main/java/dev/simonverhoeven/openrewritedemo/oldorgname/SampleController.java[SampleController] we have:
 
 [source,java]
 ----
@@ -579,18 +579,18 @@ We'll see that it has been transformed to:
 private static final String ACCOUNT_KEY = /*~~(Azure access key)~~>*/"lJzRc1YdHaAA2KCNJJ1tkYwF/+mKK6Ygw0NGe170Xu592euJv2wYUtBlV8z+qnlcNQSnIYVTkLWntUO1F8j8rQ==";
 ----
 
-Which makes it a lot easier for us to find these kind of issues.
+Which makes it a lot easier for us to find these kinds of issues.
 
 ==== Generating a Bill of Materials (BOM)
 
-You might be asked to provide a list of your (transitive) project dependencies, this can easily be achieved using the `cyclonedx` goal.
+You might be asked to provide a list of your (transitive) project dependencies. This can easily be achieved using the `cyclonedx` goal.
 
 
 ==== etc...
 
 OpenRewrite has so many more interesting recipes, and I'd invite you to take a gander at their recipe list.
 
-A last one I wanted to point out which showcases a way in which OpenRewrite can help with the readability of your codebase is the https://docs.openrewrite.org/recipes/sql/formatsql[formatsql] one
+A last one I wanted to point out, which showcases a way in which OpenRewrite can help with the readability of your codebase, is the https://docs.openrewrite.org/recipes/sql/formatsql[formatsql] one
 
 Which automatically transforms this:
 
@@ -636,9 +636,9 @@ class Test {
 == Generative AI
 
 Proper expectation management is needed, as it's still very much a work in progress.
-Initially even the generated recipes didn't compile
+Initially, even the generated recipes didn't compile
 
-Currently the scope has been reduced to limit the use cases, yet still adding value such as:
+Currently, the scope has been reduced to limit the use cases, yet still adding value, such as:
 
 * https://docs.openrewrite.org/recipes/ai/spellcheckcommentsinfrench[Fix mis-encoded comments in French]
 * https://docs.openrewrite.org/recipes/ai/findcommentslanguage[https://docs.openrewrite.org/recipes/ai/findcommentslanguage]
@@ -665,7 +665,7 @@ Certain recipes are only executable through this tool.
 * https://docs.openrewrite.org/recipes[OpenRewrite Recipe catalog]
 * https://docs.openrewrite.org/concepts-explanations/recipes[OpenRewrite recipe explanation]
 * https://www.moderne.io/[Moderne] - a platform to automate migrating, securing, and maintaining source code. It uses OpenRewrite recipes and offers certain extra features like data tables to view the changes that were made. It is free for open source projects.
-* https://github.com/spring-projects-experimental/spring-boot-migrator[Spring boot migrator] - a CLI tool that offers recipes to migrate/upgrade an application to Spring boot and is compatible with & uses OpenRewrite
+* https://github.com/spring-projects-experimental/spring-boot-migrator[Spring boot migrator] - a CLI tool that offers recipes to migrate/upgrade an application to Spring Boot and is compatible with & uses OpenRewrite
 * https://www.moderne.ai/content-library/ai-for-mass-scale-code-refactoring-and-analysis-oreilly[O'Reilly: AI for
 Mass-Scale Code
 Refactoring and
@@ -673,4 +673,4 @@ Analysis]
 
 == Notes
 
-If you have a multi-module maven project you might run into errors when using the maven plugin, a workaround & more information is documented at https://docs.openrewrite.org/running-recipes/multi-module-maven[using multi-module maven].
+If you have a multi-module maven project, you might run into errors when using the Maven plugin. A workaround & more information is documented at https://docs.openrewrite.org/running-recipes/multi-module-maven[using multi-module maven].
